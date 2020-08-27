@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import { Menu, MenuItem, Row, Col, Submenu, MenuItemGroup, Card } from 'element-ui';
 import './assets/css/base.scss';
+import './assets/js/DragDropTouch';
 
 Vue.config.productionTip = false;
 Vue.use(Row);

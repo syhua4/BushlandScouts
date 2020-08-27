@@ -3,7 +3,11 @@
     <h1>{{ title }}</h1>
     <el-row :gutter="30">
       <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="item of content" :key="item.title">
-        <el-card :body-style="{ padding: '0px' }" shadow="always">
+        <el-card
+          :body-style="{ padding: '0px' }"
+          shadow="always"
+          @click.native="toCard(item.title)"
+        >
           <img :src="item.imgUrl" class="image" />
           <div style="padding: 14px;">
             <span>{{ item.title }}</span>
@@ -21,6 +25,10 @@
 export default {
   name: 'Cards',
   props: {
+    clickable: {
+      type: Boolean,
+      default: false
+    },
     title: {
       type: String,
       default: ''
@@ -28,6 +36,11 @@ export default {
     content: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    toCard(name) {
+      this.$emit('toCard', name);
     }
   }
 };
