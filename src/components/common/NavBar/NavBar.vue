@@ -4,7 +4,14 @@
       <slot name="logo" />
     </div>
     <div class="nav-items" v-if="!isMobile">
-      <router-link v-for="item in navItems" :key="item.name" :to="item.to" class="nav-item">
+      <audio src="~assets/shimmer_1.mp3" ref="fx" />
+      <router-link
+        v-for="item in navItems"
+        :key="item.name"
+        :to="item.to"
+        class="nav-item"
+        @click.native="navClick"
+      >
         <i class="iconfont" :class="item.icon" />
         <span>{{ item.name }}</span>
       </router-link>
@@ -56,6 +63,9 @@ export default {
   methods: {
     toggleSideDrawer() {
       this.showSideDrawer = !this.showSideDrawer;
+    },
+    navClick() {
+      this.$refs.fx.play();
     }
   },
   watch: {

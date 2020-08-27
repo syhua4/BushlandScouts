@@ -48,7 +48,7 @@ export default {
       ],
       importance: [
         {
-          title: 'Provides Shelter and Shades for Animals and Plants',
+          title: 'Provides Shelter for Animals and Plants',
           imgUrl: 'https://www.newidea.com.au/media/41375/banksia.jpg?width=720&center=0.0,0.0',
           desc:
             'Bushland provides a home for many threatened and endangered species. It provides a home for more than 80% of biodiverity on earth'
