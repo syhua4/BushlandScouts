@@ -1,7 +1,9 @@
 <template>
   <div class="games">
     <cards :content="games" :clickable="true" @toCard="toCard" />
-    <router-view />
+    <div class="game-wrapper">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -29,6 +31,8 @@ export default {
     toCard(name) {
       if (name === 'Jigsaw Puzzle') {
         this.$router.push('/games/jigsaw');
+      } else {
+        this.$router.push('/games/whac-a-pest');
       }
     }
   }
@@ -38,5 +42,12 @@ export default {
 <style lang="scss" scoped>
 .games {
   @include font_size($m);
+  .game-wrapper {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background-color: $background-color;
+  }
 }
 </style>

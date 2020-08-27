@@ -5,6 +5,7 @@ import Pests from 'views/Pests/Pests';
 import Games from 'views/Games/Games';
 import Explore from 'views/Explore/Explore';
 import JigsawPuzzle from 'views/Games/ChildComp/JigsawPuzzle';
+import WhacAPest from 'views/Games/ChildComp/WhacPest';
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,11 @@ const routes = [
         name: 'JigsawPuzzle',
         path: 'jigsaw',
         component: JigsawPuzzle
+      },
+      {
+        name: 'WhacAPest',
+        path: 'whac-a-pest',
+        component: WhacAPest
       }
     ]
   },
