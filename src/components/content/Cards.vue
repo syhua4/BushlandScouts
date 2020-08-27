@@ -77,15 +77,18 @@ export default {
         span {
           color: #fff;
           @include font_size($ml);
+          height: 50px;
           line-height: 1;
           text-shadow: 1px 2px 7px rgba(0, 0, 0, 0.5);
-          padding-bottom: 10px;
+          padding-bottom: 5px;
           text-transform: uppercase;
           font-weight: 800;
-          display: block;
+          display: flex;
+          align-items: center;
         }
         p {
           border-top: 1px solid #fff;
+          padding-top: 5px;
         }
       }
     }
