@@ -1,0 +1,43 @@
+@import './reset.scss';
+@import './variable.scss';
+@import './mixin.scss';
+// @import '//at.alicdn.com/t/font_1858104_yu6k1046cgd.css';
+// @import 'https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap';
+// @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+@import '//at.alicdn.com/t/font_2029535_7yl0n68ajr3.css';
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap');
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  // overflow: hidden;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: $background-color;
+  // touch-action: none;
+}
+body {
+  @include font_size($m);
+  font-family: 'Nunito', sans-serif, Helvetica, sans-serif, STHeiTi;
+  color: #333;
+}
+img {
+  vertical-align: bottom;
+}
+a {
+  color: #fff;
+}
+
+h1 {
+  @include font_size($l);
+  font-weight: 800;
+  text-align: center;
+  margin-top: 100px;
+}
+input {
+  border: none;
+  outline: none;
+  background: none;
+  -webkit-appearance: none;
+}

@@ -1,0 +1,35 @@
+@import './variable.scss';
+
+@mixin font_dpr($font-size) {
+  font-size: $font-size * 1px;
+  [data-dpr='2'] & {
+    font-size: $font-size * 2px;
+  }
+  [data-dpr='3'] & {
+    font-size: $font-size * 2px;
+  }
+  [data-dpr='1'][is-ios='true'] & {
+    /* prettier-ignore */
+    font-size: $font-size * 1PX;
+  }
+  [data-dpr='2'][is-ios='true'] & {
+    /* prettier-ignore */
+    font-size: $font-size * 2PX;
+  }
+  [data-dpr='3'][is-ios='true'] & {
+    /* prettier-ignore */
+    font-size: $font-size * 3PX;
+  }
+}
+
+@mixin font_size($size) {
+  @include font_dpr($size);
+}
+
+@mixin clamp($row) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $row;
+}
