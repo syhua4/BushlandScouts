@@ -4,6 +4,7 @@ import Home from 'views/Home/Home';
 import Pests from 'views/Pests/Pests';
 import Games from 'views/Games/Games';
 import Explore from 'views/Explore/Explore';
+import JigsawPuzzle from 'views/Games/ChildComp/JigsawPuzzle';
 
 Vue.use(VueRouter);
 
@@ -21,7 +22,14 @@ const routes = [
   {
     path: '/games',
     name: 'Game',
-    component: Games
+    component: Games,
+    children: [
+      {
+        name: 'JigsawPuzzle',
+        path: 'jigsaw',
+        component: JigsawPuzzle
+      }
+    ]
   },
   {
     path: '/explore',

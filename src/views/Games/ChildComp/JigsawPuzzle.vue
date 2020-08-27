@@ -188,6 +188,9 @@ export default {
 
 <style lang="scss" scoped>
 .j-puzzle {
+  position: fixed;
+  top: 75px;
+  background-color: $background-color;
   padding: 24px;
   display: flex;
   flex-direction: column;
