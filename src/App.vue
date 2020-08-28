@@ -12,9 +12,11 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'App',
   components: { NavBar },
+
   data() {
     return {
       screenWidth: document.body.clientWidth,
+      dpr: Math.floor(window.devicePixelRatio),
       navigation: [
         {
           name: 'HOME',
@@ -40,14 +42,20 @@ export default {
     };
   },
   mounted() {
+    this.setDpr(parseInt(this.dpr));
     this.checkIsMobile(document.body.clientWidth);
 
+    this.checkIsMobile(
+      this.dpr == 0 ? document.body.clientWidth : document.body.clientWidth / this.dpr
+    );
+
     window.onresize = () => {
-      this.screenWidth = document.body.clientWidth;
+      this.screenWidth =
+        this.dpr == 0 ? document.body.clientWidth : document.body.clientWidth / this.dpr;
     };
   },
   methods: {
-    ...mapActions(['setIsMobile']),
+    ...mapActions(['setDpr', 'setIsMobile']),
     checkIsMobile(val) {
       if (val <= 768 && !this.isMobile) {
         this.setIsMobile(true);
@@ -62,7 +70,7 @@ export default {
   watch: {
     screenWidth(val) {
       if (!this.timer) {
-        this.screenWidth = val;
+        this.screenWidth = this.dpr == 0 ? val : val / this.dpr;
         this.timer = true;
         this.checkIsMobile(val);
         setTimeout(() => {

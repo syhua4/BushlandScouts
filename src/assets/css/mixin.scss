@@ -33,3 +33,7 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $row;
 }
+
+@mixin default_bg() {
+  background: url('~assets/images/bg_test.png');
+}

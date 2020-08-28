@@ -62,7 +62,6 @@ export default {
   img {
     width: 100%;
     object-fit: cover;
-    // object-position: 50% 75%;
   }
 }
 </style>

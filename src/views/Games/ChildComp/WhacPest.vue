@@ -1,10 +1,16 @@
 <template>
   <div
     class="whac-pest"
+    :class="{ mobile: isMobile }"
     @click="hit($event)"
     ref="canvas"
     @mousedown="changeCursor($event)"
     @mouseup="changeCursor($event)"
+    :style="{
+      '--scale': isMobile && dpr ? mobileDim.scale : '',
+      '--game-width': isMobile && dpr ? mobileDim.width + 'px' : '',
+      '--game-height': isMobile && dpr ? mobileDim.height + 'px' : ''
+    }"
   >
     <audio ref="audio" src="~assets/images/mole/TalkingCuteChiptune.mp3" loop />
     <div class="panel">
@@ -25,7 +31,7 @@
         <img src="~assets/images/mole/end.png" />
         <span>{{ this.score }}</span>
         <div class="end-console">
-          <div class="back" />
+          <div class="back" @click="goBack" />
           <div class="restart" @click="startGame" />
         </div>
       </div>
@@ -36,6 +42,7 @@
 <script>
 import Velocity from 'velocity-animate';
 import 'velocity-animate/velocity.ui';
+import { mapGetters } from 'vuex';
 export default {
   name: 'WhacPest',
   data() {
@@ -46,12 +53,21 @@ export default {
       score: 0,
       life: 5,
       isPlaying: false,
-      showResult: false
+      showResult: false,
+      mobileDim: {}
     };
+  },
+  created() {
+    this.mobileDim['width'] = document.body.clientWidth;
+    this.mobileDim['height'] = (document.body.clientWidth / 920) * 577;
+    this.mobileDim['scale'] = document.body.clientWidth / 920;
   },
   mounted() {
     this.$refs.audio.volume = 0.1;
     this.$refs.audio.play();
+  },
+  destroyed() {
+    this.$parent.playing = false;
   },
   methods: {
     enter(el, done) {
@@ -154,7 +170,14 @@ export default {
       setTimeout(() => {
         this.init();
       }, 1500);
+    },
+    goBack() {
+      this.$router.push('/games');
+      this.$parent.playing = false;
     }
+  },
+  computed: {
+    ...mapGetters(['isMobile', 'dpr'])
   }
 };
 </script>
@@ -171,6 +194,10 @@ export default {
   transition: background-image 1s ease-in-out;
   cursor: url('~assets/images/mole/hammer.png') -20 0, auto;
   position: relative;
+  &.mobile {
+    transform-origin: center left;
+    transform: scale(var(--scale));
+  }
   .panel {
     padding: 20px;
     height: 30px;

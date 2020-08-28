@@ -139,7 +139,7 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-  height: 100vh;
+  height: 100%;
   @include font_size($m);
   .cards {
     max-width: 1024px;

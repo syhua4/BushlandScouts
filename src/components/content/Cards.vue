@@ -1,13 +1,9 @@
 <template>
   <div class="cards">
-    <h1>{{ title }}</h1>
+    <h1 v-if="title.length">{{ title }}</h1>
     <el-row :gutter="30">
       <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="item of content" :key="item.title">
-        <el-card
-          :body-style="{ padding: '0px' }"
-          shadow="always"
-          @click.native="toCard(item.title)"
-        >
+        <el-card :body-style="{ padding: '0px' }" shadow="no" @click.native="toCard(item.title)">
           <img :src="item.imgUrl" class="image" />
           <div class="text-wrapper">
             <span>{{ item.title }}</span>
@@ -46,13 +42,20 @@ export default {
 
 <style lang="scss" scoped>
 .cards {
-  margin: 0 24px;
+  padding: 48px 24px 0;
+  margin: 0 auto;
   @include font_size($m);
+  // background-color: #fff;
   h1 {
-    color: #fff;
+    display: inline-block;
+    padding-right: 30px;
+    color: #333;
     margin: 20px 0;
     text-align-last: left;
     @include font_size($ml);
+    border-bottom: 3px solid;
+    border-color: $sub_color;
+    text-align: left;
   }
   .el-col {
     margin-bottom: 30px;
@@ -79,7 +82,7 @@ export default {
           @include font_size($ml);
           height: 50px;
           line-height: 1;
-          text-shadow: 1px 2px 7px rgba(0, 0, 0, 0.5);
+          text-shadow: 3px 3px 7px rgba(0, 0, 0, 0.6);
           padding-bottom: 5px;
           text-transform: uppercase;
           font-weight: 800;
@@ -87,7 +90,7 @@ export default {
           align-items: center;
         }
         p {
-          border-top: 1px solid #fff;
+          border-top: 2px solid #fff;
           padding-top: 5px;
         }
       }

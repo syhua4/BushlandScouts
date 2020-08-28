@@ -3,21 +3,22 @@
     <div class="logo">
       <slot name="logo" />
     </div>
-    <div class="nav-items" v-if="!isMobile">
-      <audio src="~assets/shimmer_1.mp3" ref="fx" />
-      <router-link
-        v-for="item in navItems"
-        :key="item.name"
-        :to="item.to"
-        class="nav-item"
-        @click.native="navClick"
-      >
-        <i class="iconfont" :class="item.icon" />
-        <span>{{ item.name }}</span>
-      </router-link>
+    <div class="navbar-wrapper" :class="{ mobile: isMobile }">
+      <div class="nav-items" v-if="!isMobile">
+        <audio src="~assets/shimmer_1.mp3" ref="fx" />
+        <router-link
+          v-for="item in navItems"
+          :key="item.name"
+          :to="item.to"
+          class="nav-item"
+          @click.native="navClick"
+        >
+          <i class="iconfont" :class="item.icon" />
+          <span>{{ item.name }}</span>
+        </router-link>
+      </div>
+      <hamburger-icon class="nav-item" v-else @click.native="toggleSideDrawer" ref="burger" />
     </div>
-
-    <hamburger-icon class="nav-item" v-else @click.native="toggleSideDrawer" ref="burger" />
     <transition name="slide-in">
       <el-row v-show="showSideDrawer">
         <el-col :span="12">
@@ -75,7 +76,12 @@ export default {
       }
     },
     $route(to, from) {
-      if (to.name !== from.name && this.isMobile) {
+      if (
+        to.path !== from.path &&
+        this.isMobile &&
+        to.matched.length < 2 &&
+        from.matched.length < 2
+      ) {
         this.$refs.burger.$refs.hamburger.classList.remove('opened');
         this.toggleSideDrawer();
       }
@@ -89,7 +95,10 @@ export default {
 
 .navbar {
   @include font_size($s);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   font-family: 'Nunito', sans-serif;
   font-weight: 800;
   z-index: 99;
@@ -97,6 +106,7 @@ export default {
   padding: 8px;
   justify-content: center;
   background-color: $background-color;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
   .logo {
     padding-left: 20px;
     position: absolute;
@@ -107,38 +117,42 @@ export default {
       height: 40px;
     }
   }
-  .nav-items {
-    display: flex;
-    height: 59px;
-    align-items: center;
-    text-align: center;
-
-    .nav-item {
+  .navbar-wrapper {
+    position: relative;
+    &.mobile {
       display: flex;
-      flex-direction: column;
-      margin: 0 24px;
-      width: 68px;
-      cursor: pointer;
-      position: relative;
-      .iconfont {
-        @include font_size($ml);
-        padding: 5px 0;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .nav-items {
+      display: flex;
+      height: 59px;
+      align-items: center;
+      text-align: center;
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        margin: 0 24px;
+        width: 68px;
+        cursor: pointer;
+        position: relative;
+        .iconfont {
+          @include font_size($ml);
+          padding: 5px 0;
+        }
+        &:hover,
+        &.router-link-exact-active {
+          background: rgba(0, 0, 0, 0.18);
+          border-radius: 3px;
+        }
       }
-      &:hover,
-      &.router-link-exact-active {
-        background: rgba(0, 0, 0, 0.18);
-        border-radius: 3px;
-      }
-      // &:hover,
-      // &:active {
-      //   color: #90ba92;
-      //   transition: all 0.2s;
-      // }
+    }
+    .hamburger-icon {
+      margin-left: auto;
     }
   }
-  .hamburger-icon {
-    margin-left: auto;
-  }
+
   .el-row {
     position: fixed;
     top: 58px;
