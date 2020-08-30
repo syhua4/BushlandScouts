@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <img src="~assets/images/1.jpg" class="bg" />
     <nav-bar :navItems="navigation">
       <img slot="logo" src="~assets/images/logo.png" />
     </nav-bar>
@@ -82,4 +83,13 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+</style>

@@ -21,6 +21,8 @@ body {
   @include font_size($m);
   font-family: 'Nunito', sans-serif, Helvetica, sans-serif, STHeiTi;
   color: #333;
+  // background: url('~assets/images/1.jpg') center center no-repeat fixed;
+  background-attachment: fixed;
 }
 img {
   vertical-align: bottom;
@@ -34,6 +36,8 @@ h1 {
   font-weight: 800;
   text-align: center;
   margin-top: 100px;
+  position: relative;
+  z-index: 1;
 }
 input {
   border: none;

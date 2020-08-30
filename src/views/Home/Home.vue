@@ -1,20 +1,30 @@
 <template>
   <div class="home">
     <banner :banners="banners" />
-    <cards title="WHAT IS BUSHLAND" :content="bushland" />
-    <cards title="WHAT BUSHLAND CAN DO FOR US" :content="importance" />
-    <cards title="NEWSLETTER FROM THE BUSH" :content="newsletter" />
-    <cards title="LET'S PROTECT OUR BUSHLAND" :content="solution" />
+    <div class="card-wrapper" v-if="isMobile">
+      <cards title="WHAT IS BUSHLAND" :content="bushland" />
+      <cards title="WHAT BUSHLAND CAN DO FOR US" :content="importance" />
+      <cards title="NEWSLETTER FROM THE BUSH" :content="newsletter" />
+      <cards title="LET'S PROTECT OUR BUSHLAND" :content="solution" />
+    </div>
+    <div v-else>
+      <flipping-cards title="WHAT IS BUSHLAND" :content="bushland" />
+      <flipping-cards title="WHAT BUSHLAND CAN DO FOR US" :content="importance" />
+      <flipping-cards title="NEWSLETTER FROM THE BUSH" :content="newsletter" />
+      <flipping-cards title="LET'S PROTECT OUR BUSHLAND" :content="solution" />
+    </div>
   </div>
 </template>
 
 <script>
 import Banner from 'components/content/Banner';
 import Cards from 'components/content/Cards';
+import FlippingCards from 'components/content/FlippingCard';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Home',
-  components: { Banner, Cards },
+  components: { Banner, Cards, FlippingCards },
   data() {
     return {
       banners: [
@@ -134,6 +144,9 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    ...mapGetters(['isMobile'])
   }
 };
 </script>
