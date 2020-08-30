@@ -62,7 +62,7 @@ export default {
     margin-bottom: 30px;
     .el-card {
       border-radius: 10px;
-      height: 360px;
+      height: 380px;
       border: none;
       position: relative;
       background-color: #f3cf00;

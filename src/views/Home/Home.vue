@@ -67,30 +67,33 @@ export default {
         {
           title: 'Act as Carbon Sink',
           imgUrl: 'https://cdn.pixabay.com/photo/2019/02/27/17/52/germinate-4024588_960_720.jpg',
-          desc: 'Forests and trees absorb CO2 and store it in their leaves,stems, trunks and roots'
+          desc: 'Forests and trees absorb CO2 and store it in their leaves,stems, trunks and roots.'
         },
         {
           title: 'Slow Down Global Warming',
           imgUrl:
             'https://img.freepik.com/free-vector/illustration-global-warming-concept_53876-20557.jpg?size=626&ext=jpg',
           desc:
-            'Plants and trees in bushland plays an important role in regulating the climate because they absorb carbon dioxide from the air and release oxygen back into it.'
+            'Plants and trees in bushland play an important role in regulating the climate because they absorb carbon dioxide from the air and release oxygen back into it.'
         },
         {
           title: 'Prevent Water Erosion',
           imgUrl: 'https://www.agric.wa.gov.au/sites/gateway/files/4378049%20Water%20erosion.jpg',
-          desc: 'Bushland '
+          desc:
+            'The roots of bushland plants will also help to stabilize the soil by drinking excess water. In addition, they can reduce the effects of rainfall, wind, and overwatering.'
         },
         {
           title: 'Prevent Wind Erosion',
           imgUrl: 'https://cdn.newsapi.com.au/image/v1/dff753c08c4ba5331032d4c34d9b1c27',
-          desc: 'Bushland '
+          desc:
+            'In bushland, the surface of the soil was shielded by trees. It reduces the wind speed and prevents the loss of fine particles and organic matter.'
         },
         {
           title: 'Provides Healthy and Delicious Food',
           imgUrl:
             'https://www.killyourdarlings.com.au/wp-content/uploads/2019/10/37322722230_731a44af69_k.jpg',
-          desc: 'Bushland '
+          desc:
+            'Bush vegetables and fruits are bursting with vitamins and minerals, It accounts for a large portion of indigenous diets.'
         }
       ],
       newsletter: [
@@ -99,26 +102,26 @@ export default {
           imgUrl:
             'https://robbreportedit.files.wordpress.com/2020/01/shutterstock_1608574255-1.jpg?w=1000',
           desc:
-            'Bushland provides a home for many threatened and endangered species. It provides a home for more than 80% of biodiverity on earth'
+            'The 2019-2020 bushfire has burnt down 19830 hectares of bushland. Around 1.25 billion animals have been lost and caused a significant reduction in Queensland’s biodiversity.'
         },
         {
           title: 'Deforestration',
           imgUrl:
             'https://truththeory.com/wp-content/uploads/2018/03/IMG_20180307_224419-600x398.png',
           desc:
-            'Bushland provides a home for many threatened and endangered species. It provides a home for more than 80% of biodiverity on earth'
+            'Forest wood has a high usage for fuel, construction or manufacturing. Around 5,000 square kilometres of bushland are being destroyed annually and 85% happens in Queensland'
         },
         {
           title: 'Invasive Intruders',
           imgUrl: 'https://www.bionet.nz/assets/Uploads/feralcat3-Cropped.jpg',
           desc:
-            'Bushland provides a home for many threatened and endangered species. It provides a home for more than 80% of biodiverity on earth'
+            'Invasive intruders in bushland are animals and plants. They have an impact on native flora and fauna, reducing local biodiversity.'
         },
         {
           title: 'Litter Dumping Ground',
           imgUrl: 'https://cdn.newsapi.com.au/image/v1/6058862cd3b6eb6d8e06ebc6171f4c7f?width=1024',
           desc:
-            'Bushland provides a home for many threatened and endangered species. It provides a home for more than 80% of biodiverity on earth'
+            'Recently, there is a rise in waste material and household rubbish found in the bushland area. Hazardous waste will pollute the bushland and affect biodiversity.'
         }
       ],
       solution: [
@@ -126,21 +129,24 @@ export default {
           title: 'Identify the invaders',
           imgUrl: 'https://cdn.dribbble.com/users/35810/screenshots/3286201/500-01-shot1.jpg',
           desc:
-            'Bushland provides a home for many threatened and endangered species. It provides a home for more than 80% of biodiverity on earth'
+            'Identify a variety of plants and animals that are harmful to the bushland, know what they looked like and why they are harmful to the bushland!',
+          link: '/pests/'
         },
         {
-          title: 'Inform the authority',
+          title: 'Learn about the invaders and have fun',
           imgUrl:
-            'https://img.freepik.com/free-vector/group-kids-picking-up-rubbish_1308-31447.jpg?size=626&ext=jpg',
+            'https://www.clipartkey.com/mpngs/m/52-520547_smart-grow-educational-games-cartoon.png',
           desc:
-            'Bushland provides a home for many threatened and endangered species. It provides a home for more than 80% of biodiverity on earth'
+            'Packed full of cool kids games that will test your knowledge and cunning, prepare for a challenge!',
+          link: '/games'
         },
         {
           title: 'Scouts action',
           imgUrl:
             'https://img.freepik.com/free-vector/group-kids-picking-up-rubbish_1308-31447.jpg?size=626&ext=jpg',
           desc:
-            'Bushland provides a home for many threatened and endangered species. It provides a home for more than 80% of biodiverity on earth'
+            'Do you want to explore Bushland? Do you want to know the conversation between plants and animals?',
+          link: '/explore'
         }
       ]
     };

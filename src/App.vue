@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="~assets/images/1.jpg" class="bg" />
+    <img src="~assets/images/bg.jpg" class="bg" />
     <nav-bar :navItems="navigation">
       <img slot="logo" src="~assets/images/logo.png" />
     </nav-bar>
@@ -47,12 +47,12 @@ export default {
     this.checkIsMobile(document.body.clientWidth);
 
     this.checkIsMobile(
-      this.dpr == 0 ? document.body.clientWidth : document.body.clientWidth / this.dpr
+      this.dpr <= 2 ? document.body.clientWidth : document.body.clientWidth / this.dpr
     );
 
     window.onresize = () => {
       this.screenWidth =
-        this.dpr == 0 ? document.body.clientWidth : document.body.clientWidth / this.dpr;
+        this.dpr <= 2 ? document.body.clientWidth : document.body.clientWidth / this.dpr;
     };
   },
   methods: {
@@ -71,7 +71,7 @@ export default {
   watch: {
     screenWidth(val) {
       if (!this.timer) {
-        this.screenWidth = this.dpr == 0 ? val : val / this.dpr;
+        this.screenWidth = this.dpr <= 2 ? val : val / this.dpr;
         this.timer = true;
         this.checkIsMobile(val);
         setTimeout(() => {

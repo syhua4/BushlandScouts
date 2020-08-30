@@ -20,7 +20,12 @@
             <img :src="item.imgUrl" class="image" />
             <div>{{ item.title }}</div>
           </div>
-          <div class="back" ref="back">{{ item.desc }}</div>
+          <div class="back" ref="back">
+            <div>
+              {{ item.desc }}
+              <a v-if="item.link" @click="toLink(item.link)">Explore more...</a>
+            </div>
+          </div>
         </el-card>
       </el-col>
     </el-row>
@@ -54,6 +59,9 @@ export default {
     toCard(index) {
       this.toggleFlip = !this.toggleFlip;
       this.active = index;
+    },
+    toLink(link) {
+      this.$router.push(link);
     }
   }
 };
@@ -106,8 +114,8 @@ export default {
       .front {
         color: #333;
         @include font_size($m);
-        // text-shadow: 3px 3px 7px rgba(0, 0, 0, 0.6);
         transform: perspective(600px) rotateY(0deg);
+
         div {
           height: 60px;
           line-height: 1.2;
@@ -123,9 +131,15 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: row;
         padding: 0 30px;
         box-sizing: border-box;
         transform: perspective(600px) rotateY(180deg);
+        a {
+          color: black;
+          display: inline-block;
+          text-decoration: underline;
+        }
       }
       &.flip .front {
         transform: perspective(600px) rotateY(-180deg);

@@ -77,10 +77,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (from.name === 'Pests') {
-        console.log(vm.$parent.playing);
-
         vm.$parent.playing = true;
-        console.log(vm.$parent.playing);
       }
     });
   },
@@ -101,14 +98,12 @@ export default {
     this.$parent.$refs.wrapper.style.paddingTop = '';
     this.$parent.playing = false;
     this.disableScroll(false);
-    console.log('des');
   },
   methods: {
     goPest() {
       this.$router.push('/pests');
     },
     toggleDesc() {
-      console.log('1111');
       this.showDesc = !this.showDesc;
     },
     musicControl() {
@@ -136,7 +131,6 @@ export default {
       this.$refs.canvas.style.cursor = `url(${cursor}) 0 -20, auto`;
     },
     createMole(pos) {
-      //创建地鼠
       let num = Math.floor(Math.random() * 4);
       let mole = require(`assets/images/mole/mole${num}.png`);
       this.moles = this.$refs.holes.children;
@@ -148,7 +142,6 @@ export default {
       this.moles[pos].timer = timer;
     },
     controlMole() {
-      // 随机生成位置
       let pos = Math.floor(Math.random() * 9);
       let holes;
       if (this.$refs.holes && this.$refs.holes.children) {
