@@ -17,11 +17,18 @@
       <div class="hearts">
         <img src="~assets/images/mole/heart.png" v-for="index in life" :key="index" />
       </div>
-      <div class="score">SCORE {{ score }}</div>
+      <div class="right-wrapper">
+        <div class="score">SCORE {{ score }}</div>
+        <img
+          src="~assets/images/mole/music_btn.png"
+          alt="game music control button"
+          @click="musicControl"
+        />
+      </div>
     </div>
     <div class="start-console" v-if="!isPlaying">
       <div class="start" @click="startGame" />
-      <div class="help" />
+      <div class="help" @click="toggleDesc" />
     </div>
     <ul ref="holes">
       <li v-for="hole of 9" :key="hole" class="hole" />
@@ -33,6 +40,15 @@
         <div class="end-console">
           <div class="back" @click="goBack" />
           <div class="restart" @click="startGame" />
+        </div>
+      </div>
+    </transition>
+    <transition @enter="enter" @leave="leave" :css="false">
+      <div class="desc" v-show="showDesc">
+        <img src="~assets/images/mole/desc.png" />
+        <div class="desc-console">
+          <div class="back" @click="toggleDesc" />
+          <div class="learn" @click="goPest" />
         </div>
       </div>
     </transition>
@@ -54,10 +70,25 @@ export default {
       life: 5,
       isPlaying: false,
       showResult: false,
+      showDesc: false,
       mobileDim: {}
     };
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (from.name === 'Pests') {
+        console.log(vm.$parent.playing);
+
+        vm.$parent.playing = true;
+        console.log(vm.$parent.playing);
+      }
+    });
+  },
   created() {
+    this.$parent.$refs.wrapper.style.paddingTop = '30px';
+    this.dom = document.getElementsByTagName('html')[0];
+    this.disableScroll(true);
+
     this.mobileDim['width'] = document.body.clientWidth;
     this.mobileDim['height'] = (document.body.clientWidth / 920) * 577;
     this.mobileDim['scale'] = document.body.clientWidth / 920;
@@ -67,9 +98,22 @@ export default {
     this.$refs.audio.play();
   },
   destroyed() {
+    this.$parent.$refs.wrapper.style.paddingTop = '';
     this.$parent.playing = false;
+    this.disableScroll(false);
+    console.log('des');
   },
   methods: {
+    goPest() {
+      this.$router.push('/pests');
+    },
+    toggleDesc() {
+      console.log('1111');
+      this.showDesc = !this.showDesc;
+    },
+    musicControl() {
+      this.$refs.audio.paused ? this.$refs.audio.play() : this.$refs.audio.pause();
+    },
     enter(el, done) {
       Velocity(el, 'transition.bounceDownIn', { duration: 500 }, function() {
         done();
@@ -106,7 +150,12 @@ export default {
     controlMole() {
       // 随机生成位置
       let pos = Math.floor(Math.random() * 9);
-      let holes = [...this.$refs.holes.children] || this.moles;
+      let holes;
+      if (this.$refs.holes && this.$refs.holes.children) {
+        holes = [...this.$refs.holes.children] || this.moles;
+      } else {
+        return;
+      }
 
       let moleOnBoard = holes.filter(mole => {
         return mole.hasAttribute('num');
@@ -136,7 +185,6 @@ export default {
       }
     },
     hit(e) {
-      console.log(e.target);
       if (e.target.hasAttribute('num')) this.hideMole(e.target, true);
     },
     init() {
@@ -174,10 +222,35 @@ export default {
     goBack() {
       this.$router.push('/games');
       this.$parent.playing = false;
+    },
+    disableScroll(status) {
+      this.dom.style.overflow = status ? 'hidden' : 'auto';
+      status
+        ? this.dom.addEventListener(
+            'touchmove',
+            e => {
+              e.preventDefault;
+            },
+            false
+          )
+        : this.dom.removeEventListener(
+            'touchmove',
+            e => {
+              e.preventDefault;
+            },
+            false
+          );
     }
   },
   computed: {
     ...mapGetters(['isMobile', 'dpr'])
+  },
+  watch: {
+    life(val) {
+      if (val < 1) {
+        this.life = 0;
+      }
+    }
   }
 };
 </script>
@@ -210,14 +283,20 @@ export default {
         padding-right: 3px;
       }
     }
-    .score {
-      font-size: 28px;
-      color: #fff;
-      line-height: 30px;
-      font-family: 'Joti One', cursive;
-      -webkit-text-fill-color: #f1dc86;
-      -webkit-text-stroke-width: 2px;
-      -webkit-text-stroke-color: #794b2f;
+    .right-wrapper {
+      text-align: right;
+      img {
+        position: relative;
+        z-index: 30;
+        margin-top: 10px;
+        width: 40px;
+        height: 40px;
+      }
+      .score {
+        font-size: 28px;
+        color: #fff;
+        line-height: 30px;
+      }
     }
   }
   .start-console {
@@ -236,7 +315,8 @@ export default {
       width: 240px;
     }
   }
-  .end {
+  .end,
+  .desc {
     position: absolute;
     height: 100%;
     top: 0;
@@ -249,10 +329,6 @@ export default {
       transform: translate3d(-45%, -65%, 0);
       font-size: 60px;
       color: #fff;
-      font-family: 'Joti One', cursive;
-      -webkit-text-fill-color: #fff;
-      -webkit-text-stroke-width: 3px;
-      -webkit-text-stroke-color: #99562f;
     }
     .end-console {
       top: 70%;
@@ -278,6 +354,24 @@ export default {
     top: 0;
     left: 0;
     transform: translate3d(-20%, -4%, 0);
+  }
+  .desc-console {
+    display: flex;
+    position: absolute;
+    top: 77%;
+    left: 48%;
+    width: 400px;
+    height: 80px;
+    transform: translate3d(-45%, -65%, 0);
+    font-size: 60px;
+    color: #fff;
+    .back,
+    .learn {
+      width: 160px;
+    }
+    .learn {
+      margin-left: auto;
+    }
   }
 }
 </style>

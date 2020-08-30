@@ -1,7 +1,7 @@
 <template>
   <div class="games">
     <cards :content="games" :clickable="true" @toCard="toCard" />
-    <div class="game-wrapper" :class="{ active: playing }">
+    <div class="game-wrapper" :class="{ active: playing }" ref="wrapper">
       <router-view />
     </div>
   </div>
@@ -64,13 +64,13 @@ export default {
   .game-wrapper {
     overflow: hidden;
     position: fixed;
-    // margin-top: 30px;
     top: 58px;
     left: 0;
     right: 0;
-    background-color: $background-color;
+    background-color: #fff;
     &.active {
       bottom: 0;
+      height: 100vh;
     }
   }
 }

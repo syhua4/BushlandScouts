@@ -31,7 +31,7 @@ export default {
           imgUrl:
             'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Brisbane_Koala_Bushlands_%287114389987%29.jpg/1599px-Brisbane_Koala_Bushlands_%287114389987%29.jpg',
           desc:
-            'Bushland is wooded area but not dense forest. It covers any habitat from thin to thick woody shrubs and bushes to tall dense forests.'
+            'Bushland is wooded area, it covers any habitat from thin to thick woody shrubs and bushes to tall dense forests.'
         },
         {
           title: 'Home to Native Species',
@@ -63,7 +63,8 @@ export default {
           title: 'Slow Down Global Warming',
           imgUrl:
             'https://img.freepik.com/free-vector/illustration-global-warming-concept_53876-20557.jpg?size=626&ext=jpg',
-          desc: 'Bushland '
+          desc:
+            'Plants and trees in bushland plays an important role in regulating the climate because they absorb carbon dioxide from the air and release oxygen back into it.'
         },
         {
           title: 'Prevent Water Erosion',
@@ -144,6 +145,10 @@ export default {
   .cards {
     max-width: 1024px;
     margin: 0 auto;
+  }
+  .backtop {
+    overflow: scroll;
+    height: 100%;
   }
 }
 </style>

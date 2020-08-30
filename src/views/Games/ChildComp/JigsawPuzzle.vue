@@ -25,6 +25,9 @@
             </el-col>
           </el-row>
         </div>
+        <div class="tools" :class="{ mobile: isMobile }">
+          <div class="back" @click="goBack">Back</div>
+        </div>
       </div>
     </transition>
     <div
@@ -62,10 +65,23 @@
             />
           </li>
         </ul>
-        <div class="summary" v-if="completed"></div>
+        <transition @enter="enterDesc" @leave="leaveDesc" :css="false">
+          <div class="summary" v-if="completed && !isMobile">
+            <h2>{{ getAnimalInfo.title }}</h2>
+            <div>{{ getAnimalInfo.desc }}</div>
+          </div>
+        </transition>
       </div>
     </div>
-
+    <el-dialog
+      :title="getAnimalInfo.title"
+      :visible.sync="showDialog"
+      width="90%"
+      center
+      :modal="false"
+    >
+      <span>{{ getAnimalInfo.desc }}</span>
+    </el-dialog>
     <div class="tools" :class="{ mobile: isMobile }">
       <div class="back" @click="goBack">Back</div>
       <div @click="changePuzzle">Change Puzzle</div>
@@ -91,11 +107,36 @@ export default {
       mobileDim: {},
       dom: '',
       completed: false,
+      showDialog: false,
       puzzles: [
-        { picUrl: require('assets/images/jigsaw/silhouette/rabbit.png'), name: 'rabbit' },
-        { picUrl: require('assets/images/jigsaw/silhouette/deer.png'), name: 'deer' },
-        { picUrl: require('assets/images/jigsaw/silhouette/dingo.png'), name: 'dingo' },
-        { picUrl: require('assets/images/jigsaw/silhouette/pig.png'), name: 'pig' }
+        {
+          picUrl: require('assets/images/jigsaw/silhouette/rabbit.png'),
+          name: 'rabbit',
+          title: 'European Rabbits',
+          desc:
+            'European rabbits eat a vast amount of seedlings and destroy the native plants in bushland. They populate very quickly, and the bushlands’ vegetation can not keep up to the rabbits’ need for seedlings. As a result, the plants are not growing and causing erosions. European rabbits also compete with the native animals for food and living habitat.'
+        },
+        {
+          picUrl: require('assets/images/jigsaw/silhouette/deer.png'),
+          name: 'deer',
+          title: 'Feral Deer',
+          desc:
+            'There are four types of feral deers in Queensland - Feral Red Deer, Feral Chital Deer, Feral Rusa Deer and Feral Fallow Deer. Those deers eat the native vegetation, cause damage to trees, spreading weed seeds and pollute the water resources.'
+        },
+        {
+          picUrl: require('assets/images/jigsaw/silhouette/dingo.png'),
+          name: 'dingo',
+          title: 'Wild Dog',
+          desc:
+            'Wild dogs have sharp teeth, and they are the predators of endangered native animals, such as the bridled nail tail wallabies, koalas and tree kangaroos. They threaten the biodiversity of the bushlands.'
+        },
+        {
+          picUrl: require('assets/images/jigsaw/silhouette/pig.png'),
+          name: 'pig',
+          title: 'Feral Pig',
+          desc:
+            'Feral pigs have sharp, dangerous tusks. They cause a lot of damage by digging up vegetables and plants in the bushland. Feral pigs prey on small native animals, and they could spread diseases to the animals and spread weeds.'
+        }
       ],
       animal: ''
     };
@@ -114,6 +155,16 @@ export default {
     changePuzzle() {
       this.animal = '';
     },
+    enterDesc(el, done) {
+      Velocity(el, 'transition.slideUpIn', { duration: 500, display: 'flex' }, function() {
+        done();
+      });
+    },
+    leaveDesc(el, done) {
+      Velocity(el, 'transition.slideUpOut', { duration: 500, display: 'flex' }, function() {
+        done();
+      });
+    },
     enter(el, done) {
       Velocity(el, 'transition.expandIn', { duration: 500 }, function() {
         done();
@@ -128,6 +179,7 @@ export default {
       this.isPlay = true;
       this.drag_id = null;
       this.drop_id = null;
+      this.completed = false;
       this.puzzleInfo = null;
       this.correctPiece = [];
     },
@@ -185,7 +237,10 @@ export default {
         setTimeout(() => e.target.classList.remove('correct'), 500);
         this.correctPiece.push(this.drag_id - 1);
         if (this.correctPiece.length === this.puzzles_num.length) {
-          console.log('win');
+          this.completed = true;
+          if (this.isMobile) {
+            this.showDialog = true;
+          }
         }
       }
     },
@@ -193,6 +248,7 @@ export default {
       let imgs = [];
       let td = [...document.getElementsByTagName('td')];
       let pieces = [...this.$refs.drawer.children];
+      this.completed = false;
       td.map(item => {
         if (item.children.length) {
           imgs.push(item.firstChild);
@@ -233,6 +289,15 @@ export default {
   },
   computed: {
     ...mapGetters(['dpr', 'isMobile']),
+    getAnimalInfo() {
+      let info = [];
+      if (this.animal) {
+        info = this.puzzles.filter(item => {
+          return item.name === this.animal;
+        });
+      }
+      return info.length ? info[0] : '';
+    },
     getGrid() {
       const newArr = [];
       let num = [...this.puzzles_num];
@@ -289,7 +354,7 @@ export default {
     background-color: #fff;
     .card-wrapper {
       position: absolute;
-      top: 50%;
+      top: 40%;
       left: 50%;
       width: 350px;
       transform: translate(-50%, -50%);
@@ -388,6 +453,22 @@ export default {
       }
       .invisible {
         display: none;
+      }
+      .summary {
+        text-align: center;
+        height: 100%;
+        padding: 0 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        @include font_size($m);
+        color: #000;
+        h2 {
+          @include font_size($l);
+          margin-bottom: 20px;
+          font-weight: 800;
+        }
       }
     }
   }
