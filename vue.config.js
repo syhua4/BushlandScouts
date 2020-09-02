@@ -34,5 +34,18 @@ module.exports = {
         `
       }
     }
+  },
+  devServer: {
+    proxy: {
+      '/api': {
+        target: process.env.VUE_APP_SERVER_URL,
+        https: false,
+        changeOrigin: true,
+        ws: false,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   }
 };

@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       banners: [
-        { id: 'pic1', picUrl: require('assets/images/banners/1.jpg') },
+        { id: 'pic1', picUrl: require('assets/images/banners/1.jpg'), title: '', desc: '' },
         { id: 'pic2', picUrl: require('assets/images/banners/2.jpg') },
         { id: 'pic3', picUrl: require('assets/images/banners/3.jpg') },
         { id: 'pic4', picUrl: require('assets/images/banners/4.jpg') },

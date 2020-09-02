@@ -29,13 +29,13 @@ export default {
           imgUrl: require('assets/images/mole/start.jpg'),
           title: 'Whac-A-Pest',
           desc: 'Prove you know the pest animals in the bushland, whack them all!'
-        },
-        {
-          imgUrl:
-            'https://st.depositphotos.com/1065578/3369/v/950/depositphotos_33696759-stock-illustration-paper-mosaic-triangles-texture-question.jpg',
-          title: 'Quiz',
-          desc: 'What do you know about our incredible bushlands?'
         }
+        // {
+        //   imgUrl:
+        //     'https://st.depositphotos.com/1065578/3369/v/950/depositphotos_33696759-stock-illustration-paper-mosaic-triangles-texture-question.jpg',
+        //   title: 'Quiz',
+        //   desc: 'What do you know about our incredible bushlands?'
+        // }
       ]
     };
   },

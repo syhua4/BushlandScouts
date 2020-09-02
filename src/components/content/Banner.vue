@@ -6,8 +6,12 @@
           <img
             :src="banner.picUrl"
             class="banner-img"
-            :style="{ height: isMobile ? 'calc(100vh / 2 - 60px)' : 'calc(100vh / 1.5 - 60px)' }"
+            :style="{ height: isMobile ? 'calc(100vh / 2)' : 'calc(80vh - 60px)' }"
           />
+          <!-- <div class="text-wrapper">
+            <h2>Protect our bushland</h2>
+            <p>EXPLORE WHY AND HOW WE CAN PRESERVE OUR BUSHLAND</p>
+          </div> -->
         </a>
       </swiper-item>
     </swiper>
@@ -38,11 +42,7 @@ export default {
   data() {
     return {
       options: {
-        loop: true,
-        pagination: {
-          el: '.swiper-pagination',
-          dynamicBullets: true
-        }
+        loop: true
       }
     };
   },
@@ -59,9 +59,18 @@ export default {
 
 <style lang="scss" scoped>
 .banner {
+  position: relative;
   img {
     width: 100%;
     object-fit: cover;
+  }
+  .text-wrapper {
+    width: 400px;
+    height: 300px;
+    background-color: #f00;
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 }
 </style>

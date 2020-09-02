@@ -6,6 +6,7 @@ import Games from 'views/Games/Games';
 import Explore from 'views/Explore/Explore';
 import JigsawPuzzle from 'views/Games/ChildComp/JigsawPuzzle';
 import WhacAPest from 'views/Games/ChildComp/WhacPest';
+import NotFound from 'views/NotFound/NotFound';
 
 Vue.use(VueRouter);
 
@@ -41,12 +42,21 @@ const routes = [
     path: '/explore',
     name: 'Explore',
     component: Explore
+  },
+  {
+    name: '404',
+    path: '/404',
+    component: NotFound
+  },
+  {
+    path: '*',
+    redirect: '/404'
   }
 ];
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: '/',
   routes
 });
 

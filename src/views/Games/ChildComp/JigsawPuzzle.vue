@@ -1,14 +1,17 @@
 <template>
   <div
     class="j-puzzle"
+    :class="{ smallPc: smallDesktopScale !== 0 && !isMobile }"
     :style="{
       '--scale': isMobile && dpr ? mobileDim.scale : '',
-      '--table-height': isMobile && dpr ? mobileDim.width + 'px' : ''
+      '--table-height': isMobile && dpr ? mobileDim.width + 'px' : '',
+      '--small-screen-scale': !isMobile ? smallDesktopScale : ''
     }"
   >
     <transition @enter="enter" @leave="leave" :css="false">
       <div class="select-puzzle" v-if="!animal">
-        <div class="card-wrapper">
+        <div class="card-wrapper" :class="{ smallPc: smallDesktopScale !== 0 && !isMobile }">
+          <el-row class="el-desc">Please select a card!</el-row>
           <el-row :gutter="30">
             <el-col
               :xs="12"
@@ -24,9 +27,9 @@
               </el-card>
             </el-col>
           </el-row>
-        </div>
-        <div class="tools" :class="{ mobile: isMobile }">
-          <div class="back" @click="goBack">Back</div>
+          <el-row class="el-back" :class="{ mobile: isMobile }">
+            <div class="back" @click="goBack">Back</div>
+          </el-row>
         </div>
       </div>
     </transition>
@@ -72,6 +75,11 @@
           </div>
         </transition>
       </div>
+      <div class="tools" :class="{ mobile: isMobile }">
+        <div class="back" @click="goBack">Back</div>
+        <div @click="changePuzzle">Change Puzzle</div>
+        <div class="restart" @click.stop="playAgain">Restart</div>
+      </div>
     </div>
     <el-dialog
       :title="getAnimalInfo.title"
@@ -82,11 +90,6 @@
     >
       <span>{{ getAnimalInfo.desc }}</span>
     </el-dialog>
-    <div class="tools" :class="{ mobile: isMobile }">
-      <div class="back" @click="goBack">Back</div>
-      <div @click="changePuzzle">Change Puzzle</div>
-      <div class="restart" @click.stop="playAgain">Restart</div>
-    </div>
   </div>
 </template>
 
@@ -98,7 +101,6 @@ export default {
   name: 'JigsawPuzzle',
   data() {
     return {
-      isPlay: true,
       drag_id: null,
       drop_id: null,
       puzzleInfo: null,
@@ -138,17 +140,25 @@ export default {
             'Feral pigs have sharp, dangerous tusks. They cause a lot of damage by digging up vegetables and plants in the bushland. Feral pigs prey on small native animals, and they could spread diseases to the animals and spread weeds.'
         }
       ],
-      animal: ''
+      animal: '',
+      smallDesktopScale: 0
     };
   },
   created() {
     this.dom = document.getElementsByTagName('html')[0];
-    this.disableScroll(true);
+    console.log(window.innerHeight);
+    if (window.innerHeight < 800 && window.innerHeight > 650) {
+      this.smallDesktopScale = 540 / window.innerHeight;
+    } else if (window.innerHeight <= 650) {
+      this.smallDesktopScale = 0.6;
+    }
+    console.log(window.innerHeight, this.smallDesktopScale);
+    // this.disableScroll(true);
     this.mobileDim['width'] = document.body.clientWidth * 0.8;
     this.mobileDim['scale'] = (document.body.clientWidth * 0.8) / 540;
   },
   destroyed() {
-    this.disableScroll(false);
+    // this.disableScroll(false);
     this.$parent.playing = false;
   },
   methods: {
@@ -176,7 +186,6 @@ export default {
       });
     },
     init() {
-      this.isPlay = true;
       this.drag_id = null;
       this.drop_id = null;
       this.completed = false;
@@ -185,20 +194,19 @@ export default {
     },
     startGame(name) {
       this.animal = name;
-      this.isPlay = true;
       this.init();
     },
 
     scatterPieces() {
       let pieces = [...document.getElementsByClassName('piece')];
-      let drawerDim = this.$refs.drawer && this.$refs.drawer.getBoundingClientRect();
+      // let drawerDim = this.$refs.drawer && this.$refs.drawer.getBoundingClientRect();
       pieces.map(piece => {
         if (this.isMobile && this.dpr) {
           piece.style.top = `0px`;
           piece.style.left = `${Math.floor(Math.random() * 150)}px`;
         } else {
-          piece.style.left = `${Math.floor(Math.random() * (drawerDim.width - 180))}px`;
-          piece.style.top = `${Math.floor(Math.random() * (540 - 24 + 1) + 24)}px`;
+          piece.style.left = `${Math.floor(Math.random() * 150)}px`;
+          piece.style.top = `${Math.floor(Math.random() * (340 - 24 + 1) + 24)}px`;
         }
       });
     },
@@ -245,6 +253,7 @@ export default {
       }
     },
     playAgain() {
+      this.correctPiece = [];
       let imgs = [];
       let td = [...document.getElementsByTagName('td')];
       let pieces = [...this.$refs.drawer.children];
@@ -262,7 +271,6 @@ export default {
         }
       });
       this.scatterPieces();
-      this.isPlay = false;
     },
     disableScroll(status) {
       this.dom.style.overflow = status ? 'hidden' : 'auto';
@@ -343,6 +351,10 @@ export default {
   position: relative;
   overflow: hidden;
   background-color: #fff;
+  &.smallPc {
+    transform: scale(var(--small-screen-scale));
+    transform-origin: top;
+  }
 
   .select-puzzle {
     position: absolute;
@@ -352,12 +364,21 @@ export default {
     height: 100%;
     z-index: 1;
     background-color: #fff;
+    .el-desc {
+      padding-bottom: 20px;
+      font-weight: 600;
+    }
+
     .card-wrapper {
+      text-align: center;
       position: absolute;
       top: 35%;
       left: 50%;
       width: 350px;
       transform: translate(-50%, -50%);
+      &.smallPc {
+        top: 50%;
+      }
       .el-card {
         border: 8px solid #97dea5;
         margin-bottom: 20px;
@@ -365,16 +386,23 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
         background-color: $background-color;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%2397dea5' fill-opacity='0.4' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E");
+        &:hover {
+          transform: scale(1.05);
+        }
       }
     }
-    .tools {
-      position: absolute;
-      bottom: 10%;
-      &.mobile {
-        position: fixed;
-        // bottom: 10%;
+    .el-back {
+      margin-top: 10px;
+      padding: 5px 24px;
+      background-color: $background-color;
+      display: inline-block;
+      border-radius: 3px;
+      cursor: pointer;
+      &:hover {
+        color: #eee;
       }
     }
   }
@@ -383,7 +411,11 @@ export default {
     display: flex;
     font-size: 0;
     position: relative;
-    height: 70vh;
+    // height: 70vh;
+    flex-wrap: wrap;
+    &.smallPc {
+      transform: scale(var(--small-screen-scale));
+    }
     .play-area {
       display: flex;
       justify-content: center;
@@ -391,13 +423,15 @@ export default {
 
       flex: 0 0 55%;
       table {
+        background-image: url('~assets/images/jigsaw/placeholder.png');
         width: 540px;
         height: 540px;
         transform: scale(var(--scale));
         transform-origin: top center;
         &.mobile {
-          transform: scale(var(--scale)) translate(-25%, 0);
+          transform: scale(var(--scale)) translate(25%, 0);
         }
+
         .hovered {
           transition: all 0.8s ease;
           background-color: #ffffff6e;
@@ -481,25 +515,38 @@ export default {
     }
   }
   .tools {
-    padding: 24px;
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    bottom: 20px;
-    left: 0;
-    right: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    @include font_size($m);
     &.mobile {
       padding-bottom: 0px;
+      div {
+        line-height: 1;
+        padding: 10px 20px;
+      }
     }
     div {
+      display: flex;
+      align-items: center;
       text-align: center;
       height: 30px;
       line-height: 30px;
       margin: 20px;
+      margin-bottom: 0;
       padding: 0 20px;
-      background-color: #fff;
+      background-color: $background-color;
+      border-radius: 3px;
       cursor: pointer;
+      position: relative;
+      transform: translateY(50px);
+      &:hover {
+        color: #fff;
+      }
     }
   }
 }

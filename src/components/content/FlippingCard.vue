@@ -2,28 +2,15 @@
   <div class="cards">
     <h1 v-if="title.length">{{ title }}</h1>
     <el-row :gutter="30">
-      <el-col
-        :xs="24"
-        :sm="8"
-        :md="8"
-        :lg="8"
-        :xl="6"
-        v-for="(item, index) of content"
-        :key="item.title"
-      >
-        <el-card
-          :body-style="{ padding: '0px' }"
-          @click.native="toCard(index)"
-          :class="{ flip: toggleFlip && active === index }"
-        >
+      <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="item of content" :key="item.title">
+        <el-card :body-style="{ padding: '0px' }" @click.native="toCard($event, item.link)">
           <div class="front" ref="front">
-            <img :src="item.imgUrl" class="image" />
+            <img v-lazy="item.imgUrl" class="image" />
             <div>{{ item.title }}</div>
           </div>
           <div class="back" ref="back">
             <div>
               {{ item.desc }}
-              <a v-if="item.link" @click="toLink(item.link)">Explore more...</a>
             </div>
           </div>
         </el-card>
@@ -35,12 +22,6 @@
 <script>
 export default {
   name: 'FlippingCard',
-  data() {
-    return {
-      toggleFlip: false,
-      active: -1
-    };
-  },
   props: {
     clickable: {
       type: Boolean,
@@ -56,9 +37,20 @@ export default {
     }
   },
   methods: {
-    toCard(index) {
-      this.toggleFlip = !this.toggleFlip;
-      this.active = index;
+    toCard(e, link) {
+      if (link) {
+        this.toLink(link);
+      }
+      let el = e.target.closest('.el-card').classList;
+      let el_classList = [...e.target.closest('.el-card').classList];
+      if (el_classList.includes('flip')) {
+        el.remove('flip');
+      } else {
+        el.add('flip');
+      }
+      // console.log(e.target.closest('.el-card').classList.includes('flip'));
+      // this.toggleFlip = !this.toggleFlip;
+      // this.active = index;
     },
     toLink(link) {
       this.$router.push(link);
@@ -72,7 +64,6 @@ export default {
   padding: 48px 24px 0;
   margin: 0 auto;
   @include font_size($m);
-  // background-color: #fff;
   h1 {
     display: inline-block;
     padding-right: 30px;

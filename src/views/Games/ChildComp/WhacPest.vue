@@ -1,7 +1,7 @@
 <template>
   <div
     class="whac-pest"
-    :class="{ mobile: isMobile }"
+    :class="{ mobile: isMobile, smallPc: smallDesktopScale !== 0 && !isMobile }"
     @click="hit($event)"
     ref="canvas"
     @mousedown="changeCursor($event)"
@@ -9,7 +9,8 @@
     :style="{
       '--scale': isMobile && dpr ? mobileDim.scale : '',
       '--game-width': isMobile && dpr ? mobileDim.width + 'px' : '',
-      '--game-height': isMobile && dpr ? mobileDim.height + 'px' : ''
+      '--game-height': isMobile && dpr ? mobileDim.height + 'px' : '',
+      '--small-screen-scale': !isMobile ? smallDesktopScale : ''
     }"
   >
     <audio ref="audio" src="~assets/images/mole/TalkingCuteChiptune.mp3" loop />
@@ -24,6 +25,7 @@
           alt="game music control button"
           @click="musicControl"
         />
+        <img src="~assets/images/mole/home_btn.png" alt="back home button" @click="goBack" />
       </div>
     </div>
     <div class="start-console" v-if="!isPlaying">
@@ -71,7 +73,8 @@ export default {
       isPlaying: false,
       showResult: false,
       showDesc: false,
-      mobileDim: {}
+      mobileDim: {},
+      smallDesktopScale: 0
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -82,9 +85,14 @@ export default {
     });
   },
   created() {
+    console.log(window.innerHeight);
+    if (window.innerHeight < 800) {
+      this.smallDesktopScale = window.innerHeight / 920;
+    }
+    console.log('small', this.smallDesktopScale);
     this.$parent.$refs.wrapper.style.paddingTop = '30px';
     this.dom = document.getElementsByTagName('html')[0];
-    this.disableScroll(true);
+    // this.disableScroll(true);
 
     this.mobileDim['width'] = document.body.clientWidth;
     this.mobileDim['height'] = (document.body.clientWidth / 920) * 577;
@@ -97,7 +105,7 @@ export default {
   destroyed() {
     this.$parent.$refs.wrapper.style.paddingTop = '';
     this.$parent.playing = false;
-    this.disableScroll(false);
+    // this.disableScroll(false);
   },
   methods: {
     goPest() {
@@ -264,6 +272,13 @@ export default {
     transform-origin: center left;
     transform: scale(var(--scale));
   }
+  &.smallPc {
+    transform: scale(var(--small-screen-scale)) translateY(-10%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
   .panel {
     padding: 20px;
     height: 30px;
@@ -281,7 +296,7 @@ export default {
       img {
         position: relative;
         z-index: 30;
-        margin-top: 10px;
+        margin: 10px 0 0 20px;
         width: 40px;
         height: 40px;
       }

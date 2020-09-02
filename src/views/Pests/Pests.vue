@@ -4,11 +4,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Pests'
-};
-</script>
+<script></script>
 
 <style lang="scss" scoped>
 .pests {

@@ -1,21 +1,25 @@
 <template>
   <div id="app">
-    <img src="~assets/images/bg.jpg" class="bg" />
+    <img src="~assets/images/bg1.jpeg" class="bg" />
     <nav-bar :navItems="navigation">
       <img slot="logo" src="~assets/images/logo.png" />
     </nav-bar>
-    <router-view />
+    <router-view ref="router" />
+    <footer-bar :isFix="fixedFooter" />
   </div>
 </template>
 <script>
 import NavBar from 'components/common/NavBar/NavBar';
+import FooterBar from 'components/common/Footer/Footer';
+
 import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'App',
-  components: { NavBar },
+  components: { NavBar, FooterBar },
 
   data() {
     return {
+      fixedFooter: false,
       screenWidth: document.body.clientWidth,
       dpr: Math.floor(window.devicePixelRatio),
       navigation: [
@@ -43,16 +47,16 @@ export default {
     };
   },
   mounted() {
-    this.setDpr(parseInt(this.dpr));
-    this.checkIsMobile(document.body.clientWidth);
+    this.$refs.router.$el.offsetHeight < screen.height && !this.isMobile
+      ? (this.fixedFooter = true)
+      : (this.fixedFooter = false);
 
-    this.checkIsMobile(
-      this.dpr <= 2 ? document.body.clientWidth : document.body.clientWidth / this.dpr
-    );
+    this.setDpr(parseInt(this.dpr));
+
+    this.checkIsMobile(screen.width >= 768 ? document.body.clientWidth : screen.width);
 
     window.onresize = () => {
-      this.screenWidth =
-        this.dpr <= 2 ? document.body.clientWidth : document.body.clientWidth / this.dpr;
+      this.checkIsMobile(screen.width >= 768 ? document.body.clientWidth : screen.width);
     };
   },
   methods: {
@@ -69,14 +73,25 @@ export default {
     ...mapGetters(['isMobile'])
   },
   watch: {
-    screenWidth(val) {
-      if (!this.timer) {
-        this.screenWidth = this.dpr <= 2 ? val : val / this.dpr;
-        this.timer = true;
-        this.checkIsMobile(val);
-        setTimeout(() => {
-          this.timer = false;
-        }, 350);
+    screenWidth: {
+      immediate: true,
+      handler(val) {
+        if (!this.timer) {
+          // console.log(val);
+          this.screenWidth = screen.width >= 768 ? val : screen.width;
+          this.timer = true;
+          this.checkIsMobile(val);
+          setTimeout(() => {
+            this.timer = false;
+          }, 350);
+        }
+      }
+    },
+    $route(to) {
+      if (to.name !== 'Home' && !this.isMobile) {
+        this.fixedFooter = true;
+      } else {
+        this.fixedFooter = false;
       }
     }
   }
@@ -85,6 +100,9 @@ export default {
 
 <style lang="scss">
 .bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   position: fixed;
   top: 0;
   left: 0;

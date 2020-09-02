@@ -1,11 +1,11 @@
 <template>
   <div class="navbar">
-    <div class="logo">
+    <div class="logo" @click="goHome">
       <slot name="logo" />
     </div>
     <div class="navbar-wrapper" :class="{ mobile: isMobile }">
       <div class="nav-items" v-if="!isMobile">
-        <audio src="~assets/shimmer_1.mp3" ref="fx" />
+        <audio src="~assets/shimmer.mp3" ref="fx" />
         <router-link
           v-for="item in navItems"
           :key="item.name"
@@ -67,6 +67,9 @@ export default {
     },
     navClick() {
       this.$refs.fx.play();
+    },
+    goHome() {
+      this.$router.push('/');
     }
   },
   watch: {
@@ -113,6 +116,7 @@ export default {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
+    cursor: pointer;
     img {
       height: 40px;
     }
