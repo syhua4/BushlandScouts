@@ -88,7 +88,8 @@ export default {
       }
     },
     $route(to) {
-      if (to.name !== 'Home' && !this.isMobile) {
+      if (to.name !== 'Home' && !this.isMobile && to.name !== 'Animals') {
+        console.log(to);
         this.fixedFooter = true;
       } else {
         this.fixedFooter = false;

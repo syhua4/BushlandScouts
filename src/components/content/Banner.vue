@@ -3,15 +3,14 @@
     <swiper v-if="banners && banners.length > 0" :options="options" ref="banner">
       <swiper-item v-for="(banner, index) in banners" :key="banner.id + index">
         <a>
-          <img
-            :src="banner.picUrl"
-            class="banner-img"
-            :style="{ height: isMobile ? 'calc(100vh / 2)' : 'calc(80vh - 60px)' }"
-          />
-          <!-- <div class="text-wrapper">
-            <h2>Protect our bushland</h2>
-            <p>EXPLORE WHY AND HOW WE CAN PRESERVE OUR BUSHLAND</p>
-          </div> -->
+          <img :src="banner.picUrl" class="banner-img" />
+          <div class="text-wrapper">
+            <h2>{{ banner.title }}</h2>
+            <p v-show="!isMobile">{{ banner.desc }}</p>
+            <div class="btn-wrapper">
+              <span @click="goLink(banner.btnLink)">{{ banner.btnText }}</span>
+            </div>
+          </div>
         </a>
       </swiper-item>
     </swiper>
@@ -21,10 +20,8 @@
 <script>
 import { Swiper, SwiperItem } from 'components/common/Slider/Slider.js';
 import { mapGetters } from 'vuex';
-// import { getUrlMixin } from 'common/mixin';
 export default {
   name: 'Banner',
-  // mixins: [getUrlMixin],
   components: {
     Swiper,
     SwiperItem
@@ -46,6 +43,15 @@ export default {
       }
     };
   },
+  methods: {
+    goLink(link) {
+      if (link !== '/') {
+        this.$router.push(link);
+      } else {
+        this.$emit('scroll');
+      }
+    }
+  },
   activated() {
     if (this.$refs.banner) {
       this.$refs.banner.$refs.mySwiper.$swiper.autoplay.start();
@@ -60,17 +66,72 @@ export default {
 <style lang="scss" scoped>
 .banner {
   position: relative;
-  img {
-    width: 100%;
-    object-fit: cover;
+  top: 60px;
+  max-width: 1024px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0px 2px 10px #ddd;
+  @media (max-width: 767px) {
+    margin-bottom: 30px;
+    box-shadow: none;
   }
-  .text-wrapper {
-    width: 400px;
-    height: 300px;
-    background-color: #f00;
-    position: absolute;
-    bottom: 0;
-    right: 0;
+  @media (min-width: 900px) {
+    margin: 50px auto;
+  }
+  a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .text-wrapper {
+      width: 50%;
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      text-transform: uppercase;
+      @media (max-width: 767px) {
+        right: 5%;
+        width: 70%;
+        text-align: right;
+        h2 {
+          @include font_size($m);
+        }
+        p {
+          @include font_size($ms);
+        }
+      }
+      h2 {
+        @include font_size($l);
+        color: $sub-color2;
+        margin: 20px 0;
+        font-family: 'Delius Unicase', cursive;
+      }
+      p {
+        color: #bc6c25;
+      }
+      .btn-wrapper {
+        text-align: center;
+        margin-top: 30px;
+        span {
+          background: $background-color;
+          border-radius: 20px;
+          padding: 8px 15px;
+          cursor: pointer;
+        }
+        @media (max-width: 767px) {
+          text-align: right;
+          @include font_size($s);
+          margin-top: 20px;
+        }
+      }
+    }
   }
 }
 </style>

@@ -1,16 +1,16 @@
 <template>
   <div class="home">
-    <banner :banners="banners" />
+    <banner :banners="banners" @scroll="scrollTo" />
     <div class="card-wrapper" v-if="isMobile">
-      <cards title="WHAT IS BUSHLAND" :content="bushland" />
+      <cards title="WHAT IS BUSHLAND" :content="bushland" ref="card1" />
       <cards title="WHAT BUSHLAND CAN DO FOR US" :content="importance" />
       <cards title="NEWSLETTER FROM THE BUSH" :content="newsletter" />
       <cards title="LET'S PROTECT OUR BUSHLAND" :content="solution" />
     </div>
     <div v-else>
-      <flipping-cards title="WHAT IS BUSHLAND" :content="bushland" />
+      <flipping-cards title="WHAT IS BUSHLAND" :content="bushland" ref="card1" />
       <flipping-cards title="WHAT BUSHLAND CAN DO FOR US" :content="importance" />
-      <flipping-cards title="NEWSLETTER FROM THE BUSH" :content="newsletter" />
+      <flipping-cards title="HARSH TRUTH FROM THE BUSH" :content="newsletter" />
       <flipping-cards title="LET'S PROTECT OUR BUSHLAND" :content="solution" />
     </div>
   </div>
@@ -28,12 +28,38 @@ export default {
   data() {
     return {
       banners: [
-        { id: 'pic1', picUrl: require('assets/images/banners/1.jpg'), title: '', desc: '' },
-        { id: 'pic2', picUrl: require('assets/images/banners/2.jpg') },
-        { id: 'pic3', picUrl: require('assets/images/banners/3.jpg') },
-        { id: 'pic4', picUrl: require('assets/images/banners/4.jpg') },
-        { id: 'pic5', picUrl: require('assets/images/banners/5.jpg') },
-        { id: 'pic5', picUrl: require('assets/images/banners/6.jpg') }
+        {
+          id: 'pic1',
+          btnText: 'Explore',
+          picUrl: require('assets/images/banners/bg1.jpg'),
+          title: 'protect our bushland',
+          desc: 'explore why and how we can preserve our bushland',
+          btnLink: '/'
+        },
+        {
+          id: 'pic2',
+          btnText: 'Identify',
+          picUrl: require('assets/images/banners/bg2.jpg'),
+          title: 'Identify the invaders',
+          desc: 'There are over 100 species that damage our bushland',
+          btnLink: '/pests'
+        },
+        {
+          id: 'pic3',
+          btnText: 'Play',
+          picUrl: require('assets/images/banners/bg3.jpg'),
+          title: 'Play and Learn',
+          desc: 'Learn abou the invaders while have fun!',
+          btnLink: '/games'
+        },
+        {
+          id: 'pic4',
+          btnText: 'Explore',
+          picUrl: require('assets/images/banners/bg4.jpg'),
+          title: 'Explore more and learn',
+          desc: 'Take scout actions and protect our bushland',
+          btnLink: '/explore'
+        }
       ],
       bushland: [
         {
@@ -41,13 +67,13 @@ export default {
           imgUrl:
             'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Brisbane_Koala_Bushlands_%287114389987%29.jpg/1599px-Brisbane_Koala_Bushlands_%287114389987%29.jpg',
           desc:
-            'Bushland is wooded area, it covers any habitat from thin to thick woody shrubs and bushes to tall dense forests.'
+            'Bushland is an uncultivated land that is covered with shrubs, trees, natural vegetation.'
         },
         {
           title: 'Home to Native Species',
           imgUrl: 'https://nomadsworld.com/wp-content/uploads/2018/04/wombat-commons.jpg',
           desc:
-            'Bushland provides a home for thousands of native animals and plants. The cute wombat lives inside the bush.'
+            'Bushland is a home for thousands of native animals and plants. The cute wombat lives inside the bush.'
         },
         {
           title: 'In The Early Days',
@@ -62,7 +88,7 @@ export default {
           title: 'Provides Shelter for Animals and Plants',
           imgUrl: 'https://www.newidea.com.au/media/41375/banksia.jpg?width=720&center=0.0,0.0',
           desc:
-            'Bushland provides a home for many threatened and endangered species. It provides a home for more than 80% of biodiverity on earth'
+            'Bushland is a home for many threatened and endangered species. It provides a home for more than 80% of biodiverity on earth'
         },
         {
           title: 'Act as Carbon Sink',
@@ -153,6 +179,15 @@ export default {
   },
   computed: {
     ...mapGetters(['isMobile'])
+  },
+  methods: {
+    scrollTo() {
+      this.$refs.card1.$refs.header.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'start'
+      });
+    }
   }
 };
 </script>

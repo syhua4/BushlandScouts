@@ -1,7 +1,7 @@
 <template>
   <div class="cards">
-    <h1 v-if="title.length">{{ title }}</h1>
-    <el-row :gutter="30">
+    <h1 v-if="title.length" ref="header">{{ title }}</h1>
+    <el-row :gutter="30" :class="{ 'two-cards': twoCards && !isMobile }">
       <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="item of content" :key="item.title">
         <el-card :body-style="{ padding: '0px' }" shadow="no" @click.native="toCard(item.title)">
           <img v-lazy="item.imgUrl" class="image" />
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: 'Cards',
   props: {
@@ -30,18 +31,26 @@ export default {
     content: {
       type: Array,
       default: () => []
+    },
+    twoCards: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
     toCard(name) {
       this.$emit('toCard', name);
     }
+  },
+  computed: {
+    ...mapGetters(['isMobile'])
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .cards {
+  max-width: 1024px;
   padding: 48px 24px 0;
   margin: 0 auto;
   @include font_size($m);
@@ -57,6 +66,12 @@ export default {
     text-align: left;
     position: relative;
     z-index: 1;
+  }
+  .el-row {
+    &.two-cards {
+      display: flex;
+      justify-content: space-around;
+    }
   }
   .el-col {
     margin-bottom: 30px;

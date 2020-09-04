@@ -7,6 +7,8 @@ import Explore from 'views/Explore/Explore';
 import JigsawPuzzle from 'views/Games/ChildComp/JigsawPuzzle';
 import WhacAPest from 'views/Games/ChildComp/WhacPest';
 import NotFound from 'views/NotFound/NotFound';
+import Animals from 'views/Pests/ChildComp/Animals';
+import Plants from 'views/Pests/ChildComp/Plants';
 
 Vue.use(VueRouter);
 
@@ -19,7 +21,19 @@ const routes = [
   {
     path: '/pests',
     name: 'Pests',
-    component: Pests
+    component: Pests,
+    children: [
+      {
+        name: 'Animals',
+        path: 'animals',
+        component: Animals
+      },
+      {
+        name: 'Plants',
+        path: 'plants',
+        component: Plants
+      }
+    ]
   },
   {
     path: '/games',

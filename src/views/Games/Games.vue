@@ -1,6 +1,7 @@
 <template>
   <div class="games">
-    <cards :content="games" :clickable="true" @toCard="toCard" />
+    <h1 v-show="!playing">Games</h1>
+    <cards :content="games" :clickable="true" @toCard="toCard" twoCards />
     <div class="game-wrapper" :class="{ active: playing }" ref="wrapper">
       <router-view />
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="cards">
-    <h1 v-if="title.length">{{ title }}</h1>
+    <h1 v-if="title.length" ref="header">{{ title }}</h1>
     <el-row :gutter="30">
       <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="item of content" :key="item.title">
         <el-card :body-style="{ padding: '0px' }" @click.native="toCard($event, item.link)">
