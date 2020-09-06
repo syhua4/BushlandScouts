@@ -1,6 +1,6 @@
 <template>
   <div class="animals">
-    <modal :title="speciesInfo.COMMON_NAM" v-show="Object.keys(speciesInfo).length">
+    <modal :title="speciesInfo.COMMON_NAME" v-show="Object.keys(speciesInfo).length">
       <tab slot="modal-content" :titles="tabTitles" :speciesInfo="speciesInfo" />
     </modal>
 
@@ -18,6 +18,7 @@ export default {
   name: 'Animals',
   components: { Gallery, Modal, Tab },
   async created() {
+    this.$parent.$refs.cards.$el.style.display = 'none';
     this.loading = this.$loading({
       lock: true,
       text: 'Loading',
@@ -30,6 +31,9 @@ export default {
   },
   destroyed() {
     this.$parent.$refs.wrapper.style.position = '';
+    this.$parent.$refs.cards.$el.style.display = 'block';
+
+    this.loading.close();
   },
   data() {
     return {

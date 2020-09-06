@@ -12,12 +12,25 @@
     </div>
     <div class="tab-content-wrapper">
       <div id="tab-content-1" class="tab-content">
-        <table>
-          <tr>
-            <td>Scientific Name</td>
-            <td>{{ speciesInfo.SCIENTIFIC }}</td>
-          </tr>
-        </table>
+        <div class="left-content">
+          <img :src="speciesInfo.IMAGE" alt="" />
+          <div class="heading">
+            Class Name: <em> {{ speciesInfo.CLASS_NAME }}</em>
+          </div>
+          <div class="heading">
+            Family Name: <em> {{ speciesInfo.FAMILY_NAME }}</em>
+          </div>
+          <div class="heading">
+            Common Name: <em> {{ speciesInfo.COMMON_NAME }}</em>
+          </div>
+          <div class="heading">
+            Scientific Name: <em> {{ speciesInfo.SCIENTIFIC }}</em>
+          </div>
+        </div>
+        <div class="right-wrapper">
+          <div class="heading">Description:</div>
+          {{ speciesInfo.DESCRIPTION }}
+        </div>
       </div>
     </div>
   </div>
@@ -74,6 +87,31 @@ export default {
         background-color: $background-color;
         color: #fff;
       }
+    }
+  }
+  .tab-content {
+    display: flex;
+    padding-top: 20px;
+    .right-wrapper {
+      padding: 0 15px;
+      .heading {
+        margin-bottom: 10px;
+      }
+    }
+    .heading {
+      font-weight: 800;
+      em {
+        font-weight: 400;
+      }
+    }
+    img {
+      display: block;
+      height: 200px;
+      width: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      margin-right: 40px;
     }
   }
 }

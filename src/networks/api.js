@@ -6,8 +6,9 @@ export function getAnimals() {
   });
 }
 
-export function getPlants() {
+export function getPlants(page = 1) {
   return request({
-    url: '/plants'
+    url: '/plants',
+    params: { page }
   });
 }

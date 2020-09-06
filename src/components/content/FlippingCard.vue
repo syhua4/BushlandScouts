@@ -141,6 +141,12 @@ export default {
       &:hover {
         transform: scale(1.03);
       }
+      &:hover .front {
+        transform: perspective(600px) rotateY(-180deg);
+      }
+      &:hover .back {
+        transform: perspective(600px) rotateY(0deg);
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
     <main role="main" id="main">
       <section class="tiles-a">
         <ul>
-          <li v-for="(item, index) in content" :key="item.COMMON_NAM">
-            <div v-lazy:background-image="item.Image_url" @click="showSpecies(index)" />
+          <li v-for="(item, index) in content" :key="item.COMMON_NAME">
+            <div v-lazy:background-image="item.IMAGE" @click="showSpecies(index)" />
           </li>
         </ul>
       </section>

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from 'views/Home/Home';
+import Home from 'views/Home/Home2';
 import Pests from 'views/Pests/Pests';
 import Games from 'views/Games/Games';
 import Explore from 'views/Explore/Explore';

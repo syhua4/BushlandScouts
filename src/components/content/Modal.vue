@@ -95,6 +95,7 @@ $easing: cubic-bezier(0.55, 0, 0.1, 1);
         right: 10px;
         top: 0;
         color: #ccc;
+        cursor: pointer;
         &:hover {
           color: #333;
           transition: color 0.3s linear;
