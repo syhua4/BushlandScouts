@@ -11,7 +11,6 @@
 <script>
 import NavBar from 'components/common/NavBar/NavBar';
 import FooterBar from 'components/common/Footer/Footer';
-
 import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'App',
@@ -46,6 +45,14 @@ export default {
       ]
     };
   },
+  created() {
+    let pwd = prompt('Please enter the password:');
+    while (pwd !== 'mp27!') {
+      if (pwd == null || pwd == '') {
+        this.$router.push('/404');
+      } else pwd = prompt('Please enter the password:');
+    }
+  },
   mounted() {
     this.$refs.router.$el.offsetHeight < screen.height && !this.isMobile
       ? (this.fixedFooter = true)
@@ -77,7 +84,6 @@ export default {
       immediate: true,
       handler(val) {
         if (!this.timer) {
-          // console.log(val);
           this.screenWidth = screen.width >= 768 ? val : screen.width;
           this.timer = true;
           this.checkIsMobile(val);
@@ -89,7 +95,6 @@ export default {
     },
     $route(to) {
       if (to.name !== 'Home' && !this.isMobile && to.name !== 'Animals') {
-        console.log(to);
         this.fixedFooter = true;
       } else {
         this.fixedFooter = false;

@@ -1,10 +1,5 @@
 <template>
-  <swiper
-    ref="mySwiper"
-    :options="swiperOptions"
-    @mouseenter.native="stopSwiper"
-    @mouseleave.native="startSwiper"
-  >
+  <swiper ref="mySwiper" :options="swiperOptions">
     <slot />
     <div :class="{ 'swiper-button-prev': !isMobile }" slot="button-prev"></div>
     <div :class="{ 'swiper-button-next': !isMobile }" slot="button-next"></div>
@@ -32,17 +27,12 @@ export default {
       swiperOptions: Object.assign(
         {},
         {
-          autoplay: {
-            delay: 2500,
-            disableOnInteraction: false
-          },
           navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
           },
-          parallax: true,
+          // parallax: true,
           effect: 'fade',
-          spaceBetween: 30,
           observer: true,
           observeParents: true,
           observeSlideChildren: true

@@ -228,6 +228,9 @@ export default {
       e.target.classList.remove('hovered');
     },
     drop(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
       e.target.classList.remove('hovered');
 
       if (e.target.parentElement.tagName != 'TR' || e.target.children.length != 0) {

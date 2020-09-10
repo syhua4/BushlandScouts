@@ -1,8 +1,9 @@
 import { request } from './request';
 
-export function getAnimals() {
+export function getAnimals(page = 1) {
   return request({
-    url: '/animals'
+    url: '/animals',
+    params: { page }
   });
 }
 

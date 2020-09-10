@@ -32,6 +32,7 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
+  color: #fff;
   position: relative;
   z-index: 2;
   background-color: $background-color;

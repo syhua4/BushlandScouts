@@ -124,7 +124,7 @@ export default {
           title: 'Bushfire',
           imgUrl: require('assets/images/home_image/bushfire.png'),
           desc:
-            'The 2019-2020 bushfire has burnt down 19830 hectares of bushland. Around 1.25 billion animals have been lost and caused a significant reduction in Queensland’s biodiversity.'
+            'The 2019-2020 bushfire has burnt down 19830 hectares of bushland. Around 1.25 billion animals have been lost and caused a significant reduction in Queensland’s biological diversity, is the variety of life.'
         },
         {
           title: 'Deforestration',
@@ -136,13 +136,13 @@ export default {
           title: 'Invasive Intruders',
           imgUrl: require('assets/images/home_image/fox.png'),
           desc:
-            'Invasive intruders in bushland are animals and plants. They have an impact on native flora and fauna, reducing local biodiversity.'
+            'Invasive intruders in bushland are animals and plants. They have an impact on native flora and fauna, reducing local biological diversity, is the variety of life.'
         },
         {
           title: 'Litter Dumping Ground',
           imgUrl: require('assets/images/home_image/litter.png'),
           desc:
-            'Recently, there is a rise in waste material and household rubbish found in the bushland area. Hazardous waste will pollute the bushland and affect biodiversity.'
+            'Recently, there is a rise in waste material and household rubbish found in the bushland area. Hazardous waste will pollute the bushland and affect biological diversity, is the variety of life.'
         }
       ],
       solution: [

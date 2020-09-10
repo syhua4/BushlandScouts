@@ -51,14 +51,6 @@ export default {
         this.$emit('scroll');
       }
     }
-  },
-  activated() {
-    if (this.$refs.banner) {
-      this.$refs.banner.$refs.mySwiper.$swiper.autoplay.start();
-    }
-  },
-  deactivated() {
-    this.$refs.banner.$refs.mySwiper.$swiper.autoplay.stop();
   }
 };
 </script>

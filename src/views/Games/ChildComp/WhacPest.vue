@@ -275,7 +275,7 @@ export default {
   &.smallPc {
     transform: scale(var(--small-screen-scale)) translateY(-10%);
     position: absolute;
-    top: 0;
+    top: 45px;
     left: 0;
     right: 0;
   }

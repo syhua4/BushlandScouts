@@ -83,7 +83,10 @@ $easing: cubic-bezier(0.55, 0, 0.1, 1);
       text-align: center;
       position: relative;
       text-transform: uppercase;
-      @include font_size($ml);
+      @include font_size(26);
+      .title {
+        font-weight: 800;
+      }
       &.mobile {
         margin-top: 10px;
       }

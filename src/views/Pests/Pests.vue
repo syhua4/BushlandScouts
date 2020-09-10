@@ -1,7 +1,14 @@
 <template>
   <div class="pests">
     <h1>Pests</h1>
-    <cards :content="species" :clickable="true" @toCard="toCard" twoCards ref="cards" />
+    <cards
+      :content="species"
+      :clickable="true"
+      @toCard="toCard"
+      twoCards
+      ref="cards"
+      :isShow="show"
+    />
     <div class="pest-wrapper" ref="wrapper">
       <router-view />
     </div>
@@ -18,6 +25,7 @@ export default {
   },
   data() {
     return {
+      show: true,
       species: [
         {
           imgUrl: require('assets/images/pest_image/animals.png'),
@@ -27,7 +35,7 @@ export default {
         },
         {
           imgUrl: require('assets/images/pest_image/plants.png'),
-          title: 'Weeds (Work in process)',
+          title: 'Weeds (Work in progress)',
           desc:
             'Weeds are plants growing where it is not unwanted. They outgrow native plants and takeover the bushland. Native animals can lose their home and food.'
         }
@@ -36,13 +44,22 @@ export default {
   },
   methods: {
     toCard(name) {
-      this.playing = true;
       if (name === 'Feral Animals') {
         this.$router.push('/pests/animals');
       } else {
         this.$router.push('/pests/plants');
       }
       this.$refs.wrapper.style.position = 'absolute';
+    }
+  },
+  watch: {
+    $route(to, from) {
+      if (to.matched.length > 1) {
+        this.$refs.wrapper.style.position = 'absolute';
+        this.show = false;
+      } else if (from.matched.length > 1) {
+        this.show = true;
+      }
     }
   }
 };

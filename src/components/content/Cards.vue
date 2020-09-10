@@ -1,9 +1,9 @@
 <template>
-  <div class="cards">
+  <div class="cards" v-show="isShow">
     <h1 v-if="title.length" ref="header">{{ title }}</h1>
     <el-row :gutter="30" :class="{ 'two-cards': twoCards && !isMobile }">
       <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="item of content" :key="item.title">
-        <el-card :body-style="{ padding: '0px' }" shadow="no" @click.native="toCard(item.title)">
+        <el-card :body-style="{ padding: '0px' }" @click.native="toCard(item.title)">
           <img v-lazy="item.imgUrl" class="image" />
           <div class="text-wrapper">
             <span>{{ item.title }}</span>
@@ -35,6 +35,10 @@ export default {
     twoCards: {
       type: Boolean,
       default: false
+    },
+    isShow: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
