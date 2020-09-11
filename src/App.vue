@@ -5,7 +5,7 @@
       <img slot="logo" src="~assets/images/logo.png" />
     </nav-bar>
     <router-view ref="router" />
-    <footer-bar :isFix="fixedFooter" />
+    <footer-bar :isFix="fixedFooter" v-if="showFooter" />
   </div>
 </template>
 <script>
@@ -18,6 +18,7 @@ export default {
 
   data() {
     return {
+      showFooter: true,
       fixedFooter: false,
       screenWidth: document.body.clientWidth,
       dpr: Math.floor(window.devicePixelRatio),
@@ -94,9 +95,15 @@ export default {
       }
     },
     $route(to) {
-      if (to.name !== 'Home' && !this.isMobile && to.name !== 'Animals') {
+      if (to.name !== 'Home' && !this.isMobile && to.matched.length === 1) {
+        this.showFooter = true;
+
         this.fixedFooter = true;
+      } else if (to.matched.length > 1) {
+        this.showFooter = false;
       } else {
+        this.showFooter = true;
+
         this.fixedFooter = false;
       }
     }

@@ -43,8 +43,8 @@ export default {
     };
   },
   methods: {
-    toCard(name) {
-      if (name === 'Feral Animals') {
+    toCard(card) {
+      if (card.name === 'Feral Animals') {
         this.$router.push('/pests/animals');
       } else {
         this.$router.push('/pests/plants');

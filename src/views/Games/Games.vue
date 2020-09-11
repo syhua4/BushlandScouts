@@ -41,9 +41,9 @@ export default {
     };
   },
   methods: {
-    toCard(name) {
+    toCard(card) {
       this.playing = true;
-      if (name === 'Jigsaw Puzzle') {
+      if (card.name === 'Jigsaw Puzzle') {
         this.$router.push('/games/jigsaw');
       } else {
         this.$router.push('/games/whac-a-pest');

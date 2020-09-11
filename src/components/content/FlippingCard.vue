@@ -9,8 +9,14 @@
             <div>{{ item.title }}</div>
           </div>
           <div class="back" ref="back">
-            <div>
+            <div v-if="isString">
               {{ item.desc }}
+            </div>
+            <div v-else>
+              <div v-for="(i, ind) in item.desc" :key="i.slice(0, 2) + ind" class="list">
+                <i class="iconfont icon-plant" />
+                {{ i }}
+              </div>
             </div>
           </div>
         </el-card>
@@ -34,6 +40,18 @@ export default {
     content: {
       type: Array,
       default: () => []
+    }
+  },
+  data() {
+    return {
+      isString: true
+    };
+  },
+  mounted() {
+    if (typeof this.content[0].desc == 'string') {
+      this.isString = true;
+    } else {
+      this.isString = false;
     }
   },
   methods: {
@@ -130,6 +148,14 @@ export default {
           color: black;
           display: inline-block;
           text-decoration: underline;
+        }
+        .list {
+          display: flex;
+          align-items: center;
+          padding: 5px 0;
+          .icon-plant {
+            margin-right: 20px;
+          }
         }
       }
       &.flip .front {

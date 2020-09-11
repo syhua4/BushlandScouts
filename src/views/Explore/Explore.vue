@@ -31,7 +31,7 @@ export default {
           desc: 'Work in progress'
         },
         {
-          imgUrl: require('assets/images/placeholder.png'),
+          imgUrl: require('assets/images/explore_image/facts.jpg'),
           title: 'FACT TIME!',
           desc: 'Work in progress'
         }
@@ -39,9 +39,9 @@ export default {
     };
   },
   methods: {
-    toCard(name) {
-      // this.playing = true;
-      if (name === 'Facts') {
+    toCard(card) {
+      console.log(card);
+      if (card.name === 'FACT TIME!') {
         this.$router.push('/explore/facts');
       } else {
         this.$router.push('/explore/story');

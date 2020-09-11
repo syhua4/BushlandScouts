@@ -4,7 +4,7 @@
       <div class="container">
         <div class="flipbook">
           <div
-            v-for="item in story"
+            v-for="item in story.pages"
             :key="item.page"
             :style="{ backgroundImage: `url(${item.image})` }"
           ></div>
@@ -19,43 +19,11 @@ import $ from 'jquery';
 import 'assets/js/turn.js';
 export default {
   name: 'Flipbook',
-  data() {
-    return {
-      story: [
-        {
-          page: '1',
-          image: require('assets/images/stories/weeds/1.jpg')
-        },
-        {
-          page: '2',
-          image: require('assets/images/stories/weeds/2.jpg')
-        },
-        {
-          page: '3',
-          image: require('assets/images/stories/weeds/3.jpg')
-        },
-        {
-          page: '4',
-          image: require('assets/images/stories/weeds/4.jpg')
-        },
-        {
-          page: '5',
-          image: require('assets/images/stories/weeds/5.jpg')
-        },
-        {
-          page: '6',
-          image: require('assets/images/stories/weeds/6.jpg')
-        },
-        {
-          page: '7',
-          image: require('assets/images/stories/weeds/7.jpg')
-        },
-        {
-          page: '8',
-          image: require('assets/images/stories/weeds/8.jpg')
-        }
-      ]
-    };
+  props: {
+    story: {
+      type: Object,
+      default: () => {}
+    }
   },
   mounted() {
     $('.flipbook').turn({
@@ -103,7 +71,7 @@ export default {
 
   .flipbook-viewport .container {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     margin: auto;
   }
