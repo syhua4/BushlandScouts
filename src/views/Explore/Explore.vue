@@ -1,7 +1,14 @@
 <template>
   <div class="explore">
     <h1>Explore</h1>
-
+    <div class="desc" v-show="show">
+      <p>
+        There are so many amazing sections just waiting to be discovered by young explorers like
+        you!
+      </p>
+      <p>Ready to explore?</p>
+      <p>Start your voyage of exploration by clicking around below.</p>
+    </div>
     <cards
       :content="species"
       :clickable="true"
@@ -65,6 +72,13 @@ export default {
 <style lang="scss" scoped>
 .explore {
   @include font_size($m);
+  .desc {
+    line-height: 1.5;
+    position: relative;
+    z-index: 9;
+    margin-top: 20px;
+    text-align: center;
+  }
   .content-wrapper {
     top: 0;
     left: 0;

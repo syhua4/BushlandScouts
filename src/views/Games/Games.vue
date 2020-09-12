@@ -1,6 +1,10 @@
 <template>
   <div class="games">
     <h1 v-show="!playing">Games</h1>
+    <div class="desc" v-show="!playing">
+      <p>Love games? This section is all about one thing: Have Fun!</p>
+      <p>Choose your favorite game and start your adventure!</p>
+    </div>
     <cards :content="games" :clickable="true" @toCard="toCard" twoCards />
     <div class="game-wrapper" :class="{ active: playing }" ref="wrapper">
       <router-view />
@@ -58,6 +62,13 @@ export default {
   @include font_size($m);
   margin-top: 50px;
   height: 100%;
+  .desc {
+    line-height: 1.5;
+    position: relative;
+    z-index: 9;
+    margin-top: 20px;
+    text-align: center;
+  }
   .cards {
     max-width: 1024px;
     margin: 0 auto;

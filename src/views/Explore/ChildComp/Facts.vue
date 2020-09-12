@@ -51,9 +51,9 @@ export default {
       factIndex: -1,
       facts: [
         {
-          imgUrl: require('assets/images/placeholder.png'),
+          imgUrl: require('assets/images/explore_image/animal.png'),
           title: 'Animal Facts',
-          desc: 'WIP',
+          desc: 'Start here to explore the amazing facts of animals!',
           animal: [
             {
               title: 'Did you know rabbits are amazing athletes?',
@@ -113,9 +113,9 @@ export default {
           ]
         },
         {
-          imgUrl: require('assets/images/placeholder.png'),
+          imgUrl: require('assets/images/explore_image/plant.jpeg'),
           title: 'Plant Facts',
-          desc: 'WIP',
+          desc: 'Start here to explore the interesting facts of plants!',
           plant: [
             {
               title: 'Did you know blackberries are weeds in Australia?',

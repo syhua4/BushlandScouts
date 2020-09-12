@@ -1,6 +1,16 @@
 <template>
   <div class="pests">
     <h1>Pests</h1>
+    <div class="desc" v-show="show">
+      <p>
+        Did you know what pests are in Bushland? Did you know their characteristics? Did you know
+        what to do when you meet them?
+      </p>
+      <p>
+        Everything you want to know is in this section, choose plants or animals to start the
+        journey！
+      </p>
+    </div>
     <cards
       :content="species"
       :clickable="true"
@@ -69,6 +79,13 @@ export default {
 .pests {
   position: relative;
   @include font_size($m);
+  .desc {
+    line-height: 1.5;
+    position: relative;
+    z-index: 9;
+    margin-top: 20px;
+    text-align: center;
+  }
   .pest-wrapper {
     top: 0;
     left: 0;
