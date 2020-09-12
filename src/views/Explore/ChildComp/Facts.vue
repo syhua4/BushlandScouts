@@ -1,6 +1,6 @@
 <template>
   <div class="facts">
-    <img src="~assets/images/bg1.jpeg" class="bg" />
+    <img src="~assets/images/bg.png" class="bg" />
     <h2>{{ showFacts ? (factIndex == 1 ? 'Weed Facts' : 'Animal Facts') : 'Facts' }}</h2>
     <div class="btn-group">
       <span class="goBack" @click="goBack">Back</span>
@@ -136,7 +136,7 @@ export default {
               ]
             },
             {
-              title: 'Did you know alligator weed is deadly in many countries?',
+              title: 'Did you know alligator weeds are deadly?',
               imgUrl:
                 'https://www.business.qld.gov.au/__data/assets/image/0020/81542/Alligator-weed-flower.JPG',
               desc: [
@@ -145,7 +145,7 @@ export default {
               ]
             },
             {
-              title: 'Did you know the aboriginals use honey locust to make bowls?',
+              title: 'Did you know honey locust can make bowls?',
               imgUrl:
                 'https://www.business.qld.gov.au/__data/assets/image/0024/81627/Honey-locust-stem-and-spikes.JPG',
               desc: [

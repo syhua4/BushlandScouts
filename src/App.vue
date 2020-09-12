@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="~assets/images/bg1.jpeg" class="bg" />
+    <img src="~assets/images/bg.png" class="bg" />
     <nav-bar :navItems="navigation">
       <img slot="logo" src="~assets/images/logo.png" />
     </nav-bar>

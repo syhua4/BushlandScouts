@@ -1,10 +1,12 @@
 <template>
   <div class="story">
-    <img src="~assets/images/bg1.jpeg" class="bg" />
+    <img src="~assets/images/bg.png" class="bg" />
     <h2>{{ showStory ? stories[storyIndex].title : 'Story' }}</h2>
     <div class="btn-group">
       <span class="goBack" @click="goBack">Back</span>
-      <p class="instruction" v-if="showStory">Please click on the page corner to flip the page.</p>
+      <p class="instruction" v-if="showStory && !isMobile">
+        Please click on the page corner to flip the page.
+      </p>
     </div>
     <cards
       :content="stories"
@@ -22,6 +24,7 @@
 <script>
 import Cards from 'components/content/Cards';
 import Flipbook from 'components/content/Flipbook';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Story',
@@ -40,7 +43,8 @@ export default {
         {
           imgUrl: require('assets/images/stories/pig/1.jpg'),
           title: 'The Monstrous Pig',
-          desc: 'WIP',
+          desc:
+            'The story is plotted in bushland where two trees are talking to each other on the topic of how feral pigs can harm them and cause damages to the bushland.',
           pages: [
             {
               page: '1',
@@ -87,7 +91,8 @@ export default {
         {
           imgUrl: require('assets/images/stories/weeds/1.jpg'),
           title: 'School Trip To Bushland',
-          desc: 'WIP',
+          desc:
+            'The story is plotted in bushland where two school students went for the excursion. While excursion they are identifying weeds in bushland. ',
           pages: [
             {
               page: '1',
@@ -132,14 +137,60 @@ export default {
           ]
         },
         {
-          imgUrl: require('assets/images/placeholder.png'),
+          imgUrl: require('assets/images/stories/bushfire/1.jpg'),
           title: 'Bushfire',
-          desc: 'WIP'
+          desc:
+            'The story is plotted in a home where child ask her dad to take her to visit bushland and after reaching there bush fire takes place due to human mistake.',
+          pages: [
+            {
+              page: '1',
+              image: require('assets/images/stories/bushfire/1.jpg')
+            },
+            {
+              page: '2',
+              image: require('assets/images/stories/bushfire/2.jpg')
+            },
+            {
+              page: '3',
+              image: require('assets/images/stories/bushfire/3.jpg')
+            },
+            {
+              page: '4',
+              image: require('assets/images/stories/bushfire/4.jpg')
+            },
+            {
+              page: '5',
+              image: require('assets/images/stories/bushfire/5.jpg')
+            },
+            {
+              page: '6',
+              image: require('assets/images/stories/bushfire/6.jpg')
+            },
+            {
+              page: '7',
+              image: require('assets/images/stories/bushfire/7.jpg')
+            },
+            {
+              page: '8',
+              image: require('assets/images/stories/bushfire/8.jpg')
+            },
+            {
+              page: '9',
+              image: require('assets/images/stories/bushfire/9.jpg')
+            },
+            {
+              page: '10',
+              image: require('assets/images/stories/bushfire/10.jpg')
+            }
+          ]
         }
       ]
     };
   },
   components: { Cards, Flipbook },
+  computed: {
+    ...mapGetters(['isMobile'])
+  },
   methods: {
     openStory(card) {
       this.storyIndex = card.index;
@@ -187,7 +238,7 @@ export default {
     max-width: 1024px;
     padding: 0 24px;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     position: relative;
     align-items: center;
     margin-top: 10px;

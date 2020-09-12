@@ -1,6 +1,6 @@
 <template>
   <div class="gallery">
-    <img src="~assets/images/bg1.jpeg" class="bg" />
+    <img src="~assets/images/bg.png" class="bg" />
     <h2>{{ $route.name === 'Animals' ? 'Animals' : 'Plants' }}</h2>
 
     <div class="btn-group">

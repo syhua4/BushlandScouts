@@ -1,6 +1,6 @@
 <template>
   <div class="flipbook-test">
-    <div class="flipbook-viewport">
+    <div class="flipbook-viewport" v-if="!isMobile">
       <div class="container">
         <div class="flipbook">
           <div
@@ -11,12 +11,16 @@
         </div>
       </div>
     </div>
+    <div class="verticle-book" v-if="isMobile">
+      <img :src="item.image" alt="" v-for="item in story.pages" :key="item.page" />
+    </div>
   </div>
 </template>
 
 <script>
 import $ from 'jquery';
 import 'assets/js/turn.js';
+import { mapGetters } from 'vuex';
 export default {
   name: 'Flipbook',
   props: {
@@ -26,27 +30,32 @@ export default {
     }
   },
   mounted() {
-    $('.flipbook').turn({
-      // Width
+    if (!this.isMobile) {
+      $('.flipbook').turn({
+        // Width
 
-      width: 922,
+        width: 922,
 
-      // Height
+        // Height
 
-      height: 600,
+        height: 600,
 
-      // Elevation
+        // Elevation
 
-      elevation: 50,
+        elevation: 50,
 
-      // Enable gradients
+        // Enable gradients
 
-      gradients: true,
+        gradients: true,
 
-      // Auto center this flipbook
+        // Auto center this flipbook
 
-      autoCenter: true
-    });
+        autoCenter: true
+      });
+    }
+  },
+  computed: {
+    ...mapGetters(['isMobile'])
   }
 };
 </script>
@@ -55,7 +64,11 @@ export default {
 .flipbook-test {
   @include font_size($m);
   /* Basic sample */
-
+  .verticle-book {
+    position: relative;
+    z-index: 9;
+    margin-top: 20px;
+  }
   body {
     overflow: hidden;
     background-color: #fcfcfc;

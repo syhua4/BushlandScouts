@@ -35,7 +35,7 @@ export default {
         },
         {
           imgUrl: require('assets/images/pest_image/plants.png'),
-          title: 'Weeds (Work in progress)',
+          title: 'Weeds',
           desc:
             'Weeds are plants growing where it is not unwanted. They outgrow native plants and takeover the bushland. Native animals can lose their home and food.'
         }

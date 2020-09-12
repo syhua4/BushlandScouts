@@ -28,12 +28,12 @@ export default {
         {
           imgUrl: require('assets/images/explore_image/comic.jpeg'),
           title: 'Story Time!',
-          desc: 'Work in progress'
+          desc: 'Check out stories about the bushland and learn along the way...'
         },
         {
           imgUrl: require('assets/images/explore_image/facts.jpg'),
           title: 'FACT TIME!',
-          desc: 'Work in progress'
+          desc: 'Find out more about the invasive animals and plants in the bushland...'
         }
       ]
     };
