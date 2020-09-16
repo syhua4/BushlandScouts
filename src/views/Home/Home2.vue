@@ -30,10 +30,10 @@ export default {
       banners: [
         {
           id: 'pic1',
-          btnText: 'Explore',
+          btnText: 'Discover',
           picUrl: require('assets/images/banners/test-bg5.jpg'),
           title: 'protect our bushland',
-          desc: 'explore why and how we can preserve our bushland',
+          desc: 'discover why and how we can preserve our bushland',
           btnLink: '/'
         },
         {

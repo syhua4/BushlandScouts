@@ -1,6 +1,12 @@
 <template>
   <div class="flipbook-test">
-    <div class="flipbook-viewport" v-if="!isMobile">
+    <div
+      class="flipbook-viewport"
+      v-if="!isMobile"
+      :style="{
+        '--top': top ? top + 'px' : '0px'
+      }"
+    >
       <div class="container">
         <div class="flipbook">
           <div
@@ -28,6 +34,14 @@ export default {
       type: Object,
       default: () => {}
     }
+  },
+  data() {
+    return {
+      top: ''
+    };
+  },
+  created() {
+    this.top = this.$parent.$el.getBoundingClientRect().height / 2;
   },
   mounted() {
     if (!this.isMobile) {
@@ -63,10 +77,13 @@ export default {
 <style lang="scss" scoped>
 .flipbook-test {
   @include font_size($m);
+  // margin-top: 185px;
+
   /* Basic sample */
   .verticle-book {
     position: relative;
     z-index: 9;
+    text-align: center;
     margin-top: 20px;
   }
   body {
@@ -84,16 +101,18 @@ export default {
 
   .flipbook-viewport .container {
     position: absolute;
-    top: 60%;
+    top: 50%;
     left: 50%;
     margin: auto;
+    margin-top: 100px;
   }
 
   .flipbook-viewport .flipbook {
     width: 922px;
     height: 600px;
     left: -461px;
-    top: -300px;
+    top: calc(-300px + var(--top));
+    margin-top: 20px;
   }
 
   .flipbook-viewport .page {

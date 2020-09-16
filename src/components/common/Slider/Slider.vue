@@ -64,12 +64,7 @@ export default {
   .swiper-button-prev,
   .swiper-button-next {
     color: $sub-color;
-    opacity: 0;
     transition: opacity 0.2s linear;
-  }
-  &:hover .swiper-button-prev,
-  &:hover .swiper-button-next {
-    opacity: 1;
   }
 }
 </style>

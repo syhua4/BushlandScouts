@@ -40,7 +40,7 @@ export default {
   // justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
-  @include font_size($m);
+  @include font_size($ms);
   &.fixed {
     position: fixed;
     bottom: 0;
@@ -58,11 +58,12 @@ export default {
       }
     }
     span {
-      margin: 30px 20px 20px;
+      margin: 15px 20px 10px;
     }
   }
   .copyright {
-    padding: 20px 0;
+    @include font_size($s);
+    padding: 10px 0;
     text-align: center;
     &.mobile {
       border-top: 1px solid #fff;

@@ -49,7 +49,7 @@
         <div class="dos" v-for="(item, index) in animal.do" :key="index * random + 2">
           <i class="iconfont icon-do" />{{ item }}
         </div>
-        <h2>--- DON'T ---</h2>
+        <h2>--- DON'TS ---</h2>
         <div class="dont" v-for="(item, index) in animal.dont" :key="index + random + 3">
           <i class="iconfont icon-dont" />{{ item }}
         </div>
@@ -59,7 +59,7 @@
         <div class="dos" v-for="(item, index) in plant.do" :key="index * random + 2">
           <i class="iconfont icon-do" />{{ item }}
         </div>
-        <h2>--- DON'T ---</h2>
+        <h2>--- DON'TS ---</h2>
         <div class="dont" v-for="(item, index) in plant.dont" :key="index + random + 3">
           <i class="iconfont icon-dont" />{{ item }}
         </div>
@@ -173,6 +173,8 @@ export default {
   }
   .tab-content-wrapper {
     min-height: 300px;
+    max-height: 350px;
+    overflow: scroll;
     .tab-content-0 {
       display: flex;
       padding-top: 20px;

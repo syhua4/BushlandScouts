@@ -423,7 +423,6 @@ export default {
       display: flex;
       justify-content: center;
       height: var(--table-height);
-
       flex: 0 0 55%;
       table {
         background-image: url('~assets/images/jigsaw/placeholder.png');
@@ -432,7 +431,7 @@ export default {
         transform: scale(var(--scale));
         transform-origin: top center;
         &.mobile {
-          transform: scale(var(--scale)) translate(25%, 0);
+          transform: scale(var(--scale)) translate(-35%, 0);
         }
 
         .hovered {
@@ -528,9 +527,15 @@ export default {
     @include font_size($m);
     &.mobile {
       padding-bottom: 0px;
+      position: fixed;
+      bottom: 50px;
+      box-sizing: border-box;
+      justify-content: space-between;
+
       div {
         line-height: 1;
         padding: 10px 20px;
+        margin-left: -24px;
       }
     }
     div {

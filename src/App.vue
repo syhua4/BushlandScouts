@@ -48,7 +48,7 @@ export default {
   },
   created() {
     let pwd = prompt('Please enter the password:');
-    while (pwd !== 'mp27!') {
+    while (pwd !== 'bush27') {
       if (pwd == null || pwd == '') {
         this.$router.push('/404');
       } else pwd = prompt('Please enter the password:');
