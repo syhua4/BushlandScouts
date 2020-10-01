@@ -1,4 +1,4 @@
-import { SET_IS_MOBILE, SET_DPR } from './mutation-types';
+import { SET_IS_MOBILE, SET_DPR, SET_LOCATION } from './mutation-types';
 
 export default {
   setDpr({ commit }, num) {
@@ -6,5 +6,8 @@ export default {
   },
   setIsMobile({ commit }, status) {
     commit(SET_IS_MOBILE, status);
+  },
+  setLocation({ commit }, location_arr) {
+    commit(SET_LOCATION, location_arr);
   }
 };
