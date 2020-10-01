@@ -12,7 +12,9 @@
     </section>
     <section class="s2">
       <img src="~assets/images/home/bg-2.png" alt="home-bg-2" class="home-bg-2" />
-      <span class="bubble-btn" ref="s2bubbleBtn" @click="animateBtn">Learn More</span>
+      <span class="bubble-btn" ref="s2bubbleBtn" data="s2bubbleBtn" @click="animateBtn($event)"
+        >Learn More</span
+      >
       <div class="s2-overbg">
         <div class="left">
           <img src="~assets/images/home/s2-left-1.png" alt="s2-overbg-1" class="s2-overbg-1" />
@@ -28,7 +30,9 @@
     </section>
     <section class="s3">
       <img src="~assets/images/home/bg-3.png" alt="home-bg-3" class="home-bg-3" />
-      <span class="bubble-btn" ref="s3bubbleBtn" @click="animateBtn($event)">Report Now</span>
+      <span class="bubble-btn" ref="s3bubbleBtn" data="s3bubbleBtn" @click="animateBtn($event)"
+        >Report Now</span
+      >
       <div class="s3-overbg">
         <img src="~assets/images/home/s3-map.png" class="overbg-map" />
         <img src="~assets/images/home/s3-girl.png" class="overbg-girl" />
@@ -98,17 +102,18 @@ export default {
       }
     },
     animateBtn(e) {
-      let section = e.path[1].classList.value;
-      let _ref = null;
-      if (section == 's2') {
-        _ref = this.$refs.s2bubbleBtn;
-      } else {
-        _ref = this.$refs.s3bubbleBtn;
-      }
+      let _ref = e.srcElement;
+      let data = _ref.getAttribute('data');
       _ref.classList.add('animate');
       setTimeout(() => {
         _ref.classList.remove('animate');
       }, 500);
+
+      if (data.includes('s2')) {
+        this.$router.push('/weeds');
+      } else {
+        this.$router.push('/report');
+      }
     }
   }
 };

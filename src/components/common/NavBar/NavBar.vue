@@ -62,8 +62,15 @@ export default {
     ...mapGetters(['isMobile'])
   },
   methods: {
-    toggleSideDrawer() {
-      this.showSideDrawer = !this.showSideDrawer;
+    toggleSideDrawer(status) {
+      console.log(status);
+      if (status) {
+        console.log('is');
+        this.showSideDrawer = false;
+      } else {
+        console.log('el');
+        this.showSideDrawer = !this.showSideDrawer;
+      }
     },
     navClick() {
       this.$refs.fx.play();
@@ -79,14 +86,10 @@ export default {
       }
     },
     $route(to, from) {
-      if (
-        to.path !== from.path &&
-        this.isMobile &&
-        to.matched.length < 2 &&
-        from.matched.length < 2
-      ) {
+      if (to.path !== from.path) {
+        console.log('111');
+        this.toggleSideDrawer('close');
         this.$refs.burger.$refs.hamburger.classList.remove('opened');
-        this.toggleSideDrawer();
       }
     }
   }
