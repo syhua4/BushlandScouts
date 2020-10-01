@@ -1,7 +1,7 @@
 @import './reset.scss';
 @import './variable.scss';
 @import './mixin.scss';
-@import '//at.alicdn.com/t/font_2029535_k4fimh88uk.css';
+@import '//at.alicdn.com/t/font_2029535_dmj4ikodqmo.css';
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Delius+Unicase:wght@700&display=swap');
 
 html,
@@ -43,7 +43,7 @@ input {
 .el-loading-spinner {
   border-radius: 50%;
   height: 160px;
-  width: 160px;
+  width: 160px !important;
   background-image: url('~assets/images/hey_bear.gif'); // 这个是自己想设置的 gif 加载动图
   background-repeat: no-repeat; //设置背景 图 不重复
   // height: 100%;
