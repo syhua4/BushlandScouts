@@ -62,15 +62,8 @@ export default {
     ...mapGetters(['isMobile'])
   },
   methods: {
-    toggleSideDrawer(status) {
-      console.log(status);
-      if (status) {
-        console.log('is');
-        this.showSideDrawer = false;
-      } else {
-        console.log('el');
-        this.showSideDrawer = !this.showSideDrawer;
-      }
+    toggleSideDrawer(s) {
+      this.showSideDrawer = s;
     },
     navClick() {
       this.$refs.fx.play();
@@ -85,11 +78,12 @@ export default {
         this.showSideDrawer = false;
       }
     },
-    $route(to, from) {
-      if (to.path !== from.path) {
-        console.log('111');
-        this.toggleSideDrawer('close');
-        this.$refs.burger.$refs.hamburger.classList.remove('opened');
+    async $route(to, from) {
+      if (this.isMobile) {
+        if (to.path !== from.path || to.path == '/report') {
+          await this.toggleSideDrawer(false);
+          this.$refs.burger.$refs.hamburger.classList.remove('opened');
+        }
       }
     }
   }
@@ -114,6 +108,7 @@ export default {
   background-color: $background-color;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
   .logo {
+    z-index: 1;
     padding-left: 20px;
     position: absolute;
     left: 0;
