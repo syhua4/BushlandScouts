@@ -8,6 +8,7 @@ import About from 'views/Footer/About';
 import Privacy from 'views/Footer/Privacy';
 import Copyright from 'views/Footer/Copyright';
 import Attributions from 'views/Footer/Attributions';
+import NotFound from 'views/NotFound/NotFound';
 
 Vue.use(VueRouter);
 
@@ -51,6 +52,15 @@ const routes = [
     path: '/attributions',
     name: 'Attributions',
     component: Attributions
+  },
+  {
+    name: '404',
+    path: '/404',
+    component: NotFound
+  },
+  {
+    path: '*',
+    redirect: '/404'
   }
 ];
 

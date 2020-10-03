@@ -15,6 +15,14 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'App',
+  created() {
+    let pwd = prompt('Please enter the password:');
+    while (pwd !== 'bush27') {
+      if (pwd == null || pwd == '') {
+        this.$router.push('/404');
+      } else pwd = prompt('Please enter the password:');
+    }
+  },
   components: { NavBar, BsFooter },
   data() {
     return {
