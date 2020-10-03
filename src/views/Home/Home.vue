@@ -63,7 +63,6 @@ export default {
   methods: {
     scrollAnimation() {
       if (this.mobile.matches) {
-        console.log('mobile');
         gsap
           .timeline({
             scrollTrigger: {
@@ -75,8 +74,6 @@ export default {
           .to('.left', 5, { x: -60 }, 0)
           .to('.right', 5, { x: 80 }, 0);
       } else if (this.tablet.matches) {
-        console.log('tablet');
-
         gsap
           .timeline({
             scrollTrigger: {
@@ -88,7 +85,6 @@ export default {
           .to('.left', 5, { x: -60 }, 0)
           .to('.right', 5, { x: 140 }, 0);
       } else if (!this.mobile.matches || !this.tablet.matches) {
-        console.log('desktop');
         gsap
           .timeline({
             scrollTrigger: {

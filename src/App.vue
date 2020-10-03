@@ -4,15 +4,18 @@
       <img slot="logo" src="~assets/images/logo.png" />
     </nav-bar>
     <router-view />
+    <bs-footer :isShow="showFooter" />
   </div>
 </template>
 <script>
 import NavBar from 'components/common/NavBar/NavBar';
+import BsFooter from 'components/common/Footer/Footer';
+
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'App',
-  components: { NavBar },
+  components: { NavBar, BsFooter },
   data() {
     return {
       navigation: [
@@ -26,7 +29,8 @@ export default {
           to: '/weeds',
           icon: 'icon-pest'
         }
-      ]
+      ],
+      showFooter: true
     };
   },
   mounted() {
@@ -64,25 +68,20 @@ export default {
           }, 350);
         }
       }
+    },
+    $route(to) {
+      if (this.isMobile) {
+        if (to.name == 'WeedInfo' || to.name == 'Report' || to.name == 'ReportForm') {
+          this.showFooter = false;
+        } else {
+          this.showFooter = true;
+        }
+        // WeedInfo
+      }
     }
-    // $route(to) {
-    //   if (to.name !== 'Home' && !this.isMobile && to.matched.length === 1) {
-    //     this.showFooter = true;
-
-    //     this.fixedFooter = true;
-    //   } else if (to.matched.length > 1) {
-    //     this.showFooter = false;
-    //   } else {
-    //     this.showFooter = true;
-
-    //     this.fixedFooter = false;
-    //   }
-    // }
   }
 };
 </script>
 <style lang="scss">
 @import 'https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css';
-#app {
-}
 </style>
