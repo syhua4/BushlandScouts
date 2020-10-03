@@ -24,7 +24,7 @@ import {
 } from 'element-ui';
 import './assets/css/base.scss';
 import './theme/element/index.css';
-
+import VueLazyLoad from 'vue-lazyload';
 Vue.config.productionTip = false;
 Vue.use(Row);
 Vue.use(Col);
@@ -46,6 +46,10 @@ Vue.use(FormItem);
 Vue.use(Loading.directive);
 Vue.prototype.$loading = Loading.service;
 Vue.prototype.$message = Message;
+Vue.use(VueLazyLoad, {
+  loading: require('assets/images/placeholder.png')
+});
+
 new Vue({
   router,
   store,

@@ -66,6 +66,11 @@ import { uploadReport } from 'networks/api';
 export default {
   created() {
     this.getLocation();
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant'
+    });
   },
   data() {
     return {
@@ -223,7 +228,6 @@ export default {
         } else {
           const fd = new FormData();
           let date = this._getDate();
-          console.log(date);
           fd.append('image', this.formData.uploadImage);
           fd.append('name', this.formData.Nickname);
           fd.append('weed', this.formData.Weed);
@@ -242,7 +246,6 @@ export default {
           uploadReport(fd).then(res => {
             if (res.status == 200) {
               this.$parent.showForm = false;
-              console.log(this.location);
               let marker = {
                 Common_name: this.formData.Weed.split('-')[1],
                 Datetime: date,

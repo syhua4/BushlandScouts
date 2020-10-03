@@ -15,7 +15,6 @@ export function getPlants(page = 1) {
 }
 
 export function uploadReport(formData) {
-  console.log('1111');
   return request({
     url: '/report',
     method: 'POST',
@@ -30,6 +29,24 @@ export function getWeedLocation(lon, lat) {
     params: {
       lon,
       lat
+    }
+  });
+}
+
+export function searchNearbyWeed(zip) {
+  return request({
+    url: '/zip',
+    params: {
+      zip
+    }
+  });
+}
+
+export function getWeedInfo(id) {
+  return request({
+    url: '/weedinfo',
+    params: {
+      id
     }
   });
 }

@@ -1,6 +1,8 @@
 <template>
   <div id="report">
     <div class="map-wrapper">
+      <i class="iconfont icon-close" @click="$router.go(-1)" v-show="!isMobile" />
+
       <mapbox class="map" ref="map" />
       <div class="report-form">
         <report-form @uploaded="uploaded" ref="form" />
@@ -21,6 +23,7 @@
 <script>
 import Mapbox from 'components/content/Map/Map';
 import ReportForm from 'views/Report/ReportForm';
+import { mapGetters } from 'vuex';
 export default {
   name: 'Report',
   components: { Mapbox, ReportForm },
@@ -31,12 +34,14 @@ export default {
         'pk.eyJ1Ijoic3lodWE0IiwiYSI6ImNrMWhxZTJ4MDAwZ3kzbm53dGdwNnFleTQifQ.YzVccW0v9f4jV-kEAkOX6g'
     };
   },
+  computed: {
+    ...mapGetters(['isMobile'])
+  },
   methods: {
     toggleReportForm() {
       this.showForm = !this.showForm;
     },
     uploaded(marker) {
-      console.log(marker);
       this.$refs.map.w_location.unshift(marker);
       this.$refs.form.resetForm();
       this.$refs.form.loading.close();
@@ -59,6 +64,7 @@ export default {
   padding-top: 75px;
   display: flex;
   align-items: center;
+
   .map-wrapper {
     position: relative;
     background-color: #fff;
@@ -67,6 +73,13 @@ export default {
     width: 70vw;
     height: 70vh;
     box-shadow: 0px 10px 15px 0px rgba(153, 153, 153, 0.3);
+    i {
+      position: absolute;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+      z-index: 10;
+    }
   }
   .report-form {
     height: 100%;

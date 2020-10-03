@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 module.exports = {
   configureWebpack: {
     module: {
@@ -26,6 +27,7 @@ module.exports = {
       }
     }
   },
+
   css: {
     loaderOptions: {
       scss: {

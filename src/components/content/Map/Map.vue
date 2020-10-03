@@ -21,7 +21,9 @@
             </div>
             <p class="discoverer" v-if="item.Reporter">Scout: {{ item.Reporter }}</p>
             <p class="found" v-if="item.Datetime">Found: {{ formatDate(item.Datetime) }}</p>
-            <div class="popup-btn">Discover More</div>
+            <div class="popup-btn" @click="$router.push(`/weeds/${item.Species_ID}`)">
+              Discover More
+            </div>
           </div>
         </MglPopup>
       </MglMarker>
@@ -90,18 +92,11 @@ export default {
           );
         }
       }
-    },
-    w_location: {
-      deep: true,
-      handler(val) {
-        console.log(val);
-      }
     }
   },
   methods: {
     onMapLoad(event) {
       this.mapActions = event.component.actions;
-      console.log('load');
     },
     async markMap(lon, lat) {
       await getWeedLocation(lon, lat).then(res => {
