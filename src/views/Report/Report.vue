@@ -3,7 +3,7 @@
     <div class="map-wrapper">
       <i class="iconfont icon-close" @click="$router.go(-1)" v-show="!isMobile" />
 
-      <mapbox class="map" ref="map" />
+      <mapbox class="map" ref="map" @getMarker="getMarker" />
       <div class="report-form">
         <report-form @uploaded="uploaded" ref="form" />
       </div>
@@ -26,23 +26,27 @@ import ReportForm from 'views/Report/ReportForm';
 import { mapGetters } from 'vuex';
 export default {
   name: 'Report',
-  components: { Mapbox, ReportForm },
+  components: { ReportForm, Mapbox },
   data() {
     return {
       showForm: false,
       accessToken:
-        'pk.eyJ1Ijoic3lodWE0IiwiYSI6ImNrMWhxZTJ4MDAwZ3kzbm53dGdwNnFleTQifQ.YzVccW0v9f4jV-kEAkOX6g'
+        'pk.eyJ1Ijoic3lodWE0IiwiYSI6ImNrMWhxZTJ4MDAwZ3kzbm53dGdwNnFleTQifQ.YzVccW0v9f4jV-kEAkOX6g',
+      markers: []
     };
   },
   computed: {
     ...mapGetters(['isMobile'])
   },
   methods: {
+    getMarker(markers) {
+      this.markers = markers;
+    },
     toggleReportForm() {
       this.showForm = !this.showForm;
     },
     uploaded(marker) {
-      this.$refs.map.w_location.unshift(marker);
+      this.$refs.map.w_location.push(marker);
       this.$refs.form.resetForm();
       this.$refs.form.loading.close();
       this.$message.success('Report has been uploaded!');

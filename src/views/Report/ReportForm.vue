@@ -25,6 +25,7 @@
       </el-form-item>
       <el-form-item label="Nickname" prop="Nickname">
         <el-input
+          :disabled="!verified"
           v-model="formData.Nickname"
           placeholder="Scout name"
           :maxlength="10"
@@ -36,6 +37,7 @@
       </el-form-item>
       <el-form-item label="Weed" prop="Weed">
         <el-select
+          :disabled="!verified"
           v-model="formData.Weed"
           placeholder="What weed did you find?"
           filterable
@@ -62,11 +64,10 @@
 <script>
 import axios from 'axios';
 import { compressImage } from 'utils/CompressImg';
-import { uploadReport } from 'networks/api';
+import { scanImage, uploadReport } from 'networks/api';
 export default {
   created() {
     this.getLocation();
-
     window.scrollTo({
       top: 0,
       behavior: 'instant'
@@ -205,7 +206,9 @@ export default {
           label: 'Stemless thistle',
           value: '26-Stemless thistle'
         }
-      ]
+      ],
+      verified: false,
+      verifiedSpecies: ''
     };
   },
 
@@ -220,6 +223,17 @@ export default {
     submitForm() {
       if (!Object.keys(this.location).length) {
         this.$message.error('Report can not be sent without the location');
+        return;
+      }
+      var sameLocation = this.$parent.markers.filter(el => {
+        return (
+          el.Latitude == this.location.latitude &&
+          el.Longitude == this.location.longitude &&
+          el.Species_ID == this.formData.Weed.split('-')[0]
+        );
+      });
+      if (sameLocation.length) {
+        this.$message.error('A report on this weed has already been placed!');
         return;
       }
       this.$refs['elForm'].validate(valid => {
@@ -239,7 +253,7 @@ export default {
 
           this.loading = this.$loading({
             lock: true,
-            text: 'Loading',
+            text: 'Sending Report',
             spinner: 'el-icon-loading',
             background: 'rgba(0, 0, 0, 0.7)'
           });
@@ -252,7 +266,11 @@ export default {
                 Latitude: this.location.latitude,
                 Longitude: this.location.longitude,
                 Reporter: this.formData.Nickname,
-                Verified: 0
+                Verified:
+                  this.verifiedSpecies ==
+                  this.formData.Weed.split('-')[1]
+                    .toLowerCase()
+                    .trim()
               };
               this.$emit('uploaded', marker);
             } else {
@@ -270,6 +288,14 @@ export default {
     },
     // read the image file
     async afterRead(file) {
+      this.verified = false;
+      this.verifiedSpecies = '';
+      this.loading = this.$loading({
+        lock: true,
+        text: 'Checking image',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
       let blob = null;
       this.$refs['elForm'].clearValidate('uploadImage');
       if (!this._validateFile(file)) {
@@ -277,13 +303,31 @@ export default {
         return;
       }
       if (file.size > 100000) {
-        await this._compress(file).then(res => {
-          blob = new window.File([res], file.name, { type: file.raw.type });
+        console.log('large');
+        let _file = this.$refs.uploadImage.uploadFiles[0];
+        await this._compress(_file).then(res => {
+          blob = new window.File([res], file.name, { type: file.type });
         });
       } else {
         blob = file.raw;
       }
       this.formData.uploadImage = blob;
+      const imageForm = new FormData();
+      imageForm.append('image', blob);
+      console.log(blob);
+      await scanImage(imageForm).then(res => {
+        this.loading.close();
+        console.log(res);
+        if (res.message.trim() != 'negative') {
+          this.verified = true;
+          this.verifiedSpecies = res.message.toLowerCase().trim();
+        } else {
+          this.$message.error(
+            'Sorry, our system did not recognise this as a weed, please try again with another image.'
+          );
+          this.$refs.uploadImage.clearFiles();
+        }
+      });
     },
     async _compress(file) {
       for (let i = 500; i > 0; i -= 50) {
