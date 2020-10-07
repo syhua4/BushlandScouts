@@ -7,10 +7,11 @@
       :attributionControl="false"
       @load="onMapLoad"
     >
+      <MglGeolocateControl position="top-right" />
       <MglMarker
         v-for="(item, index) in w_location"
         :key="index"
-        color="#00c3a4"
+        :color="item.Verified != 0 ? '#00c3a4' : '#ff7675'"
         :coordinates="[item.Longitude, item.Latitude]"
       >
         <MglPopup>
@@ -33,7 +34,7 @@
 
 <script>
 import Mapbox from 'mapbox-gl';
-import { MglMap, MglMarker, MglPopup } from 'vue-mapbox';
+import { MglMap, MglMarker, MglPopup, MglGeolocateControl } from 'vue-mapbox';
 import { getWeedLocation } from 'networks/api';
 
 export default {
@@ -41,7 +42,8 @@ export default {
   components: {
     MglMap,
     MglMarker,
-    MglPopup
+    MglPopup,
+    MglGeolocateControl
   },
   data() {
     return {
@@ -101,6 +103,7 @@ export default {
     async markMap(lon, lat) {
       await getWeedLocation(lon, lat).then(res => {
         this.w_location = res.data;
+        this.$emit('getMarker', res.data);
       });
     }
   }
@@ -108,6 +111,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css';
+
 #map {
   width: 60%;
   height: 70vh;
@@ -151,6 +156,12 @@ export default {
   #map {
     width: 100%;
     height: 100%;
+  }
+  .mapboxgl-ctrl button .mapboxgl-ctrl-icon {
+    background-position: 0;
+  }
+  .mapboxgl-user-location-accuracy-circle {
+    display: none;
   }
 }
 </style>
