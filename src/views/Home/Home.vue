@@ -1,5 +1,6 @@
 <template>
   <div id="home">
+    <scroll-indicator />
     <section class="s1">
       <img src="~assets/images/home/bg-1.png" alt="home-bg-1" class="home-bg-1" />
       <div class="s1-overbg">
@@ -45,8 +46,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/ScrollTrigger.min.js"></script>
 <script>
+import ScrollIndicator from 'components/content/ScrollIndicator/ScrollIndicator';
 export default {
   name: 'Home',
+  components: {
+    ScrollIndicator
+  },
   data() {
     return {
       mobile: window.matchMedia('(max-width: 450px)'),

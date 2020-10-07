@@ -20,10 +20,7 @@
           label-width="0px"
           @submit.native.prevent
         >
-          <el-form-item
-            prop="zipInput"
-            :rules="[{ type: 'number', message: 'Zip code must be four digits', trigger: 'blur' }]"
-          >
+          <el-form-item prop="zipInput">
             <el-input
               v-model.number="zipCode.zipInput"
               placeholder="Zip Code"
@@ -32,6 +29,15 @@
               @keyup.delete.native="resetForm"
               type="zipInput"
             />
+            <el-select v-model="zipCode.topZip" clearable placeholder="Top 5 weeds active pin code">
+              <el-option
+                v-for="(item, index) in topZipOptions"
+                :key="index"
+                :label="item.label"
+                :value="item.value"
+                :disabled="item.disabled"
+              ></el-option>
+            </el-select>
             <el-button type="primary" @click="submitForm" size="small">Search</el-button>
           </el-form-item>
         </el-form>
@@ -91,14 +97,46 @@ export default {
         }
       ],
       zipCode: {
-        zipInput: ''
-      }
+        zipInput: '',
+        topZip: ''
+      },
+      topZipOptions: [
+        {
+          label: '3029 - Tarneit',
+          value: 3029
+        },
+        {
+          label: '3336 - Deanside',
+          value: 3336
+        },
+        {
+          label: '3046 - Glenroy',
+          value: 3046
+        },
+        {
+          label: '3024 - Wyndham Value',
+          value: 3024
+        },
+        {
+          label: '3639 - Barmah',
+          value: 3639
+        }
+      ]
     };
   },
 
   methods: {
     submitForm() {
-      if (!/^3\d{3}$/.test(this.zipCode.zipInput)) {
+      console.log(this.zipCode);
+      if (!this.zipCode.zipInput && !this.zipCode.topZip) {
+        this.$message.error(
+          'Please enter either a pin code or select one from the top five from the drop down menu.'
+        );
+        return;
+      } else if (this.zipCode.zipInput && this.zipCode.topZip) {
+        this.$message.error('Please only enter one pin code for the search.');
+        return;
+      } else if (!/^3\d{3}$/.test(this.zipCode.zipInput | this.zipCode.topZip)) {
         this.$message.error(
           'Oops, Victoria zip code should be 4 digits and it starts with 3. Please try again.'
         );
@@ -110,12 +148,14 @@ export default {
           this.loading.close();
         }
         this.startLoading();
-        searchNearbyWeed(this.zipCode.zipInput).then(res => {
-          if (res.status === 200) {
-            this.weeds = res.data;
-            this.noWeed = !res.data.length;
+        searchNearbyWeed(this.zipCode.zipInput ? this.zipCode.zipInput : this.zipCode.topZip).then(
+          res => {
+            if (res.status === 200) {
+              this.weeds = res.data;
+              this.noWeed = !res.data.length;
+            }
           }
-        });
+        );
       }
     },
     resetForm() {
@@ -203,12 +243,16 @@ export default {
       }
       .zip-wrapper {
         display: flex;
-        max-width: 400px;
+        max-width: 800px;
         align-items: center;
         justify-content: space-between;
         margin: 20px auto;
         .el-input {
-          width: 75%;
+          width: 200px;
+          margin-right: 10px;
+        }
+        .el-select {
+          width: 250px;
         }
         .el-button {
           display: inline;
@@ -283,6 +327,22 @@ export default {
   @media (max-width: 600px) {
     .container {
       padding: 0 20px;
+      .weed-location .zip-wrapper {
+        max-width: 100%;
+        .el-input,
+        .el-select,
+        .el-button {
+          width: 100%;
+        }
+        .el-input::after {
+          content: 'OR';
+          color: $background-color;
+          font-weight: 600;
+        }
+        .el-button {
+          margin: 20px 0 0 0;
+        }
+      }
     }
   }
 }

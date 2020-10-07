@@ -2,8 +2,8 @@ import axios from 'axios';
 
 export function request(config) {
   const instance = axios.create({
-    // baseURL: 'https://bushlandscouts.tk/api/',
-    baseURL: 'http://localhost:8081/',
+    baseURL: 'https://bushlandscouts.tk/api/',
+    // baseURL: 'http://127.0.0.1:8081/',
     timeout: 30000
     // withCredentials: true
   });

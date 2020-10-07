@@ -20,7 +20,8 @@ import {
   Button,
   Form,
   FormItem,
-  Message
+  Message,
+  Popover
 } from 'element-ui';
 import './assets/css/base.scss';
 import './theme/element/index.css';
@@ -42,6 +43,7 @@ Vue.use(Option);
 Vue.use(Button);
 Vue.use(Form);
 Vue.use(FormItem);
+Vue.use(Popover);
 
 Vue.use(Loading.directive);
 Vue.prototype.$loading = Loading.service;

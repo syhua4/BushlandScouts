@@ -1,7 +1,7 @@
 @import './reset.scss';
 @import './variable.scss';
 @import './mixin.scss';
-@import '//at.alicdn.com/t/font_2029535_ghpzql9oqgk.css';
+@import '//at.alicdn.com/t/font_2029535_g8mi1njexw7.css';
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Delius+Unicase:wght@700&display=swap');
 
 html,
@@ -68,4 +68,8 @@ input {
 
 .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: $background-color !important;
+}
+
+.el-popover {
+  word-break: break-word !important;
 }
