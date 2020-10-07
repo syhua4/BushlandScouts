@@ -14,6 +14,16 @@ export function getPlants(page = 1) {
   });
 }
 
+export function scanImage(file) {
+  console.log(file);
+  return request({
+    url: '/scan',
+    method: 'POST',
+    data: file,
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
+}
+
 export function uploadReport(formData) {
   return request({
     url: '/report',
