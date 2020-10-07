@@ -6,14 +6,23 @@
         <section class="s0">
           <h2>{{ content.Common_name }}</h2>
           <img :src="content.IMAGE" :alt="content.Common_name" />
+          <scroll-indicator />
         </section>
       </swiper-item>
       <swiper-item>
         <img src="~assets/images/test-bg.png" alt="home-bg-2" class="bg" />
         <section class="s1">
-          <h2>Description</h2>
-          <div class="text">{{ content.Description }}</div>
-          <img :src="content.IMAGE" :alt="content.Common_name" />
+          <div class="text">
+            <h2>Description</h2>
+            <div class="content">
+              <div class="content-left">
+                {{ content.Description }}
+              </div>
+              <div class="content-right">
+                <img :src="content.IMAGE" :alt="content.Common_name" />
+              </div>
+            </div>
+          </div>
         </section>
       </swiper-item>
       <swiper-item>
@@ -39,7 +48,20 @@
             </div>
             <div class="line line-4">
               <div class="circle circle-4" :text="content.Leaf_arrangement.toLowerCase()">
-                <i class="iconfont" :class="`icon-${content.Leaf_arrangement.toLowerCase()}`" />
+                <el-popover
+                  class="popover"
+                  placement="top"
+                  :title="content.Leaf_arrangement"
+                  width="200"
+                  trigger="hover"
+                  :content="leaf_pop[content.Leaf_arrangement]"
+                >
+                  <i
+                    class="iconfont"
+                    :class="`icon-${content.Leaf_arrangement.toLowerCase()}`"
+                    slot="reference"
+                  />
+                </el-popover>
               </div>
             </div>
           </div>
@@ -62,15 +84,16 @@
       <swiper-item>
         <img src="~assets/images/test-bg.png" alt="home-bg-2" class="bg" />
         <section class="s3">
-          <h2>Impact</h2>
           <div class="text">
+            <h2>Impact</h2>
+
             <div>
               {{ content.IMPACT }}
             </div>
             <p>Have you spotted any plants like described?</p>
             <el-button type="primary" @click="$router.push('/report')">Report now</el-button>
           </div>
-          <img :src="content.IMAGE" :alt="content.Common_name" />
+          <!-- <img :src="content.IMAGE" :alt="content.Common_name" /> -->
         </section>
       </swiper-item>
     </swiper>
@@ -79,12 +102,14 @@
 
 <script>
 import { Swiper, SwiperItem } from 'components/common/Slider/Slider.js';
+import ScrollIndicator from 'components/content/ScrollIndicator/ScrollIndicator';
 
 export default {
   name: 'Fullpage',
   components: {
     Swiper,
-    SwiperItem
+    SwiperItem,
+    ScrollIndicator
   },
   props: {
     content: {
@@ -104,6 +129,13 @@ export default {
         purple: '#cd84f1',
         white: '#fff',
         yellow: '#fffa65'
+      },
+      leaf_pop: {
+        Alternate: 'Leaves on the stem is arranged in alternate sides.',
+        Opposite: 'Leaves on the stem is arranged in a symmetrical way.',
+        Basal: 'All the leaves arise from the base (crown) of the plant.',
+        Wholred: 'More than three leaves grow from a same plant node on the stem.',
+        Rosulate: 'Leaves are arranged in dense, radiating cluster.'
       }
     };
   },
@@ -117,7 +149,7 @@ export default {
 <style lang="scss" scoped>
 .fullpage {
   height: calc(100vh - 75px);
-
+  transition: all 0.2 ease-in;
   .swiper-slide {
     position: relative;
     .bg {
@@ -159,11 +191,24 @@ export default {
           font-weight: 800;
         }
       }
+      &.s1 {
+        .content {
+          display: flex;
+          align-items: center;
+          .content-left {
+            padding-right: 100px;
+            text-align: left;
+          }
+
+          img {
+            height: 300px;
+            width: 300px;
+            border-radius: 50%;
+          }
+        }
+      }
       &.s1,
       &.s3 {
-        img {
-          opacity: 0.4;
-        }
         .text {
           width: 80vw;
           position: absolute;
@@ -302,6 +347,17 @@ export default {
 }
 
 @media (max-width: 900px) {
+  .fullpage .swiper-slide section.s1 {
+    .text {
+      .content {
+        img {
+          width: 200px;
+          height: 200px;
+          min-width: 200px;
+        }
+      }
+    }
+  }
   .fullpage .swiper-slide section.s2 {
     .img-wrapper {
       width: 40vh;
@@ -370,17 +426,24 @@ export default {
     }
   }
 }
+
 @media (max-width: 767px) {
   .fullpage {
     height: calc(100vh - 58px);
     .swiper-slide section.s1,
     .swiper-slide section.s3 {
-      h2 {
-        position: absolute;
-        top: 100px;
-      }
+      // h2 {
+      //   position: absolute;
+      //   top: 100px;
+      // }
       .text {
         @include font_size($m);
+        .content {
+          flex-direction: column-reverse;
+          .content-left {
+            padding: 20px 0 0 0;
+          }
+        }
       }
     }
   }
