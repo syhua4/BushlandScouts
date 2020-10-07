@@ -3,7 +3,10 @@
     <nav-bar :navItems="navigation">
       <img slot="logo" src="~assets/images/logo.png" />
     </nav-bar>
-    <router-view />
+    <keep-alive include="Weeds">
+      <router-view />
+    </keep-alive>
+
     <bs-footer :isShow="showFooter" />
   </div>
 </template>
@@ -16,12 +19,7 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'App',
   created() {
-    let pwd = prompt('Please enter the password:');
-    while (pwd !== 'bush27') {
-      if (pwd == null || pwd == '') {
-        this.$router.push('/404');
-      } else pwd = prompt('Please enter the password:');
-    }
+    // this.setPwd()
   },
   components: { NavBar, BsFooter },
   data() {
@@ -57,6 +55,14 @@ export default {
         this.setIsMobile(true);
       } else if (val > 768) {
         this.setIsMobile(false);
+      }
+    },
+    setPwd() {
+      let pwd = prompt('Please enter the password:');
+      while (pwd !== 'bush27') {
+        if (pwd == null || pwd == '') {
+          this.$router.push('/404');
+        } else pwd = prompt('Please enter the password:');
       }
     }
   },
