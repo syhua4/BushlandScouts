@@ -11,7 +11,7 @@
 
       <div class="weed-location">
         <p>Is there any weeds around you?</p>
-        <p>Find the nearby weeds by enter your zip code!</p>
+        <p>Find the nearby weeds by enter your pin code!</p>
         <el-form
           ref="zipCode"
           :model="zipCode"
@@ -23,13 +23,18 @@
           <el-form-item prop="zipInput">
             <el-input
               v-model.number="zipCode.zipInput"
-              placeholder="Zip Code"
+              placeholder="Enter Pin Code"
               :maxlength="4"
               @keyup.enter.native="submitForm"
               @keyup.delete.native="resetForm"
               type="zipInput"
             />
-            <el-select v-model="zipCode.topZip" clearable placeholder="Top 5 weeds active pin code">
+            <span>OR</span>
+            <el-select
+              v-model="zipCode.topZip"
+              clearable
+              placeholder="Choose among the active pin code"
+            >
               <el-option
                 v-for="(item, index) in topZipOptions"
                 :key="index"
@@ -48,7 +53,7 @@
           {{
             noWeed
               ? 'Congratulations! There are no weeds in your area!'
-              : 'Find the nearby weeds by enter your zip code!'
+              : 'Find the nearby weeds by enter your pin code!'
           }}
         </div>
       </div>
@@ -77,7 +82,7 @@ export default {
       noWeed: false,
       placeholder: this.noWeed
         ? 'Congratulations! There are no weeds in your area!'
-        : 'Find the nearby weeds by enter your zip code!',
+        : 'Find the nearby weeds by enter your pin code!',
       weeds: [],
       wons: [
         {
@@ -134,11 +139,11 @@ export default {
         );
         return;
       } else if (this.zipCode.zipInput && this.zipCode.topZip) {
-        this.$message.error('Please only enter one pin code for the search.');
-        return;
+        this.zipCode.topZip = '';
+        this.submitForm();
       } else if (!/^3\d{3}$/.test(this.zipCode.zipInput | this.zipCode.topZip)) {
         this.$message.error(
-          'Oops, Victoria zip code should be 4 digits and it starts with 3. Please try again.'
+          'Oops, Victoria pin code should be 4 digits and it starts with 3. Please try again.'
         );
         return;
       } else {
@@ -167,7 +172,7 @@ export default {
     startLoading() {
       this.loading = this.$loading({
         lock: true,
-        text: 'Loading',
+        text: 'Checking Pin Code',
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       });
@@ -188,7 +193,7 @@ export default {
 
 <style lang="scss" scoped>
 #weeds {
-  background-color: #f0fff5;
+  @include bg_color_sub();
   overflow-x: hidden;
   padding-top: 75px;
   text-align: center;
@@ -206,7 +211,7 @@ export default {
       right: -150px;
       width: 300px;
       height: 300px;
-      background: #78e08f30;
+      @include bg_color_sub_before();
       animation: transform 25s ease-in-out infinite both alternate,
         movement 20s ease-in-out infinite both;
     }
@@ -220,7 +225,7 @@ export default {
       left: -220px;
       width: 400px;
       height: 400px;
-      background: #38ada940;
+      @include bg_color_sub_after();
       animation: transform 25s ease-in-out infinite both alternate,
         movement 20s ease-in-out infinite both;
     }
@@ -249,10 +254,14 @@ export default {
         margin: 20px auto;
         .el-input {
           width: 200px;
-          margin-right: 10px;
+        }
+        span {
+          margin: 0 10px;
+          font-weight: 600;
+          @include font_color();
         }
         .el-select {
-          width: 250px;
+          width: 270px;
         }
         .el-button {
           display: inline;
@@ -275,7 +284,7 @@ export default {
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 2;
-        color: #079992;
+        @include font_color();
       }
     }
   }
@@ -334,11 +343,7 @@ export default {
         .el-button {
           width: 100%;
         }
-        .el-input::after {
-          content: 'OR';
-          color: $background-color;
-          font-weight: 600;
-        }
+
         .el-button {
           margin: 20px 0 0 0;
         }

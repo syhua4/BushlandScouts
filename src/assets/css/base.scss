@@ -1,10 +1,8 @@
 @import './reset.scss';
 @import './variable.scss';
 @import './mixin.scss';
-@import '//at.alicdn.com/t/font_2029535_g8mi1njexw7.css';
+@import '//at.alicdn.com/t/font_2029535_kw3ircj3wh.css';
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Delius+Unicase:wght@700&display=swap');
-
-@import 'https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css';
 
 html,
 body {
@@ -74,4 +72,20 @@ input {
 
 .el-popover {
   word-break: break-word !important;
+  text-align: left;
+}
+
+.mapboxgl-ctrl button .mapboxgl-ctrl-icon {
+  // background-position: 0;
+  padding: 0;
+}
+.mapboxgl-user-location-accuracy-circle {
+  display: none;
+}
+
+.el-switch.is-checked .el-switch__core,
+.el-button,
+.el-button:hover {
+  @include bg_color();
+  @include border_color();
 }

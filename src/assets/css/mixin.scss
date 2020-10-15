@@ -33,3 +33,81 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $row;
 }
+
+@mixin bg_color() {
+  background: $background-color;
+  [data-theme='theme1'] & {
+    background: $background-color1;
+  }
+  [data-theme='theme2'] & {
+    background: $background-color2;
+  }
+}
+@mixin bg_alpha_color($alpha) {
+  background: rgba($color: $background-color, $alpha: $alpha);
+  [data-theme='theme1'] & {
+    background: rgba($color: $background-color1, $alpha: $alpha);
+  }
+  [data-theme='theme2'] & {
+    background: rgba($color: $background-color2, $alpha: $alpha);
+  }
+}
+
+@mixin bg_alpha_color2($alpha) {
+  background: rgba($color: $gallery-background-color, $alpha: $alpha);
+  [data-theme='theme1'] & {
+    background: rgba($color: $gallery-background-color1, $alpha: $alpha);
+  }
+  [data-theme='theme2'] & {
+    background: rgba($color: $gallery-background-color2, $alpha: $alpha);
+  }
+}
+@mixin bg_color_sub() {
+  background: $sub-background-color;
+  [data-theme='theme1'] & {
+    background: $sub-background-color1;
+  }
+  [data-theme='theme2'] & {
+    background: $sub-background-color2;
+  }
+}
+
+@mixin bg_color_sub_before() {
+  background: $sub-before-background-color;
+  [data-theme='theme1'] & {
+    background: $sub-before-background-color1;
+  }
+  [data-theme='theme2'] & {
+    background: $sub-before-background-color2;
+  }
+}
+
+@mixin bg_color_sub_after() {
+  background: $sub-after-background-color;
+  [data-theme='theme1'] & {
+    background: $sub-after-background-color1;
+  }
+  [data-theme='theme2'] & {
+    background: $sub-after-background-color2;
+  }
+}
+
+@mixin font_color() {
+  color: $background-color;
+  [data-theme='theme1'] & {
+    color: $background-color1;
+  }
+  [data-theme='theme2'] & {
+    color: $background-color2;
+  }
+}
+
+@mixin border_color() {
+  border-color: $background-color;
+  [data-theme='theme1'] & {
+    border-color: $background-color1;
+  }
+  [data-theme='theme2'] & {
+    border-color: $background-color2;
+  }
+}

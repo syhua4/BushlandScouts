@@ -5,7 +5,7 @@ export default {
   dpr(state) {
     return state.dpr;
   },
-  location(state) {
-    return state.location;
+  toggleSound(state) {
+    return state.toggleSound;
   }
 };

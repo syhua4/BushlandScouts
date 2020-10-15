@@ -66,7 +66,7 @@ export default {
     transition: opacity 0.2s linear;
   }
   .swiper-pagination-bullet-active {
-    background: $background-color;
+    @include bg_color();
   }
 }
 </style>

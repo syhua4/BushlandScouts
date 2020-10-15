@@ -55,7 +55,7 @@
       </el-form-item>
       <el-form-item size="large" class="el-btn-group">
         <el-button type="primary" class="submit-btn" @click="submitForm">Submit</el-button>
-        <el-button @click="resetForm">Reset</el-button>
+        <el-button @click="resetForm" type="primary">Reset</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -172,7 +172,7 @@ export default {
         },
         {
           label: "Paterson's curse",
-          value: "25-Paterson's Curse"
+          value: '25-Paterson s Curse'
         },
         {
           label: 'Prickly pear (drooping)',
@@ -242,6 +242,19 @@ export default {
         } else {
           const fd = new FormData();
           let date = this._getDate();
+          console.log(
+            this.formData.Weed.split('-')[1]
+              .toLowerCase()
+              .trim()
+          );
+          console.log(this.verifiedSpecies.trim());
+          let verified =
+            this.verifiedSpecies ==
+            this.formData.Weed.split('-')[1]
+              .toLowerCase()
+              .trim()
+              ? 1
+              : 0;
           fd.append('image', this.formData.uploadImage);
           fd.append('name', this.formData.Nickname);
           fd.append('weed', this.formData.Weed);
@@ -249,6 +262,7 @@ export default {
           fd.append('longitude', this.location.longitude);
           fd.append('suburb', this.location.suburb);
           fd.append('postcode', this.location.postcode);
+          fd.append('verified', verified);
           fd.append('date', date);
 
           this.loading = this.$loading({
@@ -258,10 +272,15 @@ export default {
             background: 'rgba(0, 0, 0, 0.7)'
           });
           uploadReport(fd).then(res => {
+            this.verified = false;
             if (res.status == 200) {
               this.$parent.showForm = false;
               let marker = {
-                Common_name: this.formData.Weed.split('-')[1],
+                Species_ID: this.formData.Weed.split('-')[0],
+                Common_name:
+                  this.formData.Weed.split('-')[0] == 25
+                    ? "Paterson's curse"
+                    : this.formData.Weed.split('-')[1],
                 Datetime: date,
                 Latitude: this.location.latitude,
                 Longitude: this.location.longitude,
@@ -388,6 +407,7 @@ export default {
 
 .el-form-item label {
   line-height: 1;
+  font-weight: 600;
 }
 .el-btn-group {
   padding-top: 30px;

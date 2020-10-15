@@ -4,11 +4,11 @@
     <section class="s1">
       <img src="~assets/images/home/bg-1.png" alt="home-bg-1" class="home-bg-1" />
       <div class="s1-overbg">
-        <img src="~assets/images/home/overbg-leave-1.png" class="overbg-leave " />
-        <img src="~assets/images/home/overbg-leave-2.png" class="overbg-leave " />
-        <img src="~assets/images/home/overbg-1.png" class="overbg-1" />
+        <img src="~assets/images/home/overbg-leave-1.png" class="overbg-leave " alt="leave-1" />
+        <img src="~assets/images/home/overbg-leave-2.png" class="overbg-leave " alt="leave-2" />
+        <img src="~assets/images/home/overbg-1.png" class="overbg-1" alt="overbg-1" />
 
-        <img src="~assets/images/home/clouds.png" class="overbg-cloud" />
+        <img src="~assets/images/home/clouds.png" class="overbg-cloud" alt="clouds" />
       </div>
     </section>
     <section class="s2">
@@ -35,10 +35,10 @@
         >Report Now</span
       >
       <div class="s3-overbg">
-        <img src="~assets/images/home/s3-map.png" class="overbg-map" />
-        <img src="~assets/images/home/s3-girl.png" class="overbg-girl" />
-        <img src="~assets/images/home/s3-bubble.png" class="overbg-bubble" />
-        <img src="~assets/images/home/s3-fish.png" class="overbg-fish" />
+        <img src="~assets/images/home/s3-map.png" class="overbg-map" alt="maap" />
+        <img src="~assets/images/home/s3-girl.png" class="overbg-girl" alt="girl" />
+        <img src="~assets/images/home/s3-bubble.png" class="overbg-bubble" alt="bubbles" />
+        <img src="~assets/images/home/s3-fish.png" class="overbg-fish" alt="fish" />
       </div>
     </section>
   </div>
@@ -260,7 +260,7 @@ export default {
     padding: 0 10px;
     border-radius: 20px;
     color: #fff;
-    background-color: $btn-color;
+    background-color: $background-color1;
     box-shadow: 0 2px 25px rgba(51, 100, 246, 0.5);
     transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
 

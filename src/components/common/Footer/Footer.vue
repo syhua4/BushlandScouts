@@ -40,13 +40,12 @@ export default {
   color: #fff;
   position: relative;
   z-index: 2;
-  background-color: $background-color;
   display: flex;
-  // justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.2);
   @include font_size($ms);
+  @include bg_color();
   &.fixed {
     position: fixed;
     bottom: 0;

@@ -1,5 +1,16 @@
 <template>
   <div id="report">
+    <img :src="image[themeNum]" alt="report background" class="report-bg" />
+    <el-popover
+      v-show="!isMobile"
+      placement="bottom"
+      title="Report an unusual plant pest"
+      width="200"
+      trigger="click"
+      content="Report an unusual plant pest immediately on Exotic Plant Pest Hotline 1800084881"
+    >
+      <el-button slot="reference" type="primary" icon="el-icon-phone" circle class="popover" />
+    </el-popover>
     <div class="map-wrapper">
       <i class="iconfont icon-close" @click="$router.go(-1)" v-show="!isMobile" />
 
@@ -32,8 +43,18 @@ export default {
       showForm: false,
       accessToken:
         'pk.eyJ1Ijoic3lodWE0IiwiYSI6ImNrMWhxZTJ4MDAwZ3kzbm53dGdwNnFleTQifQ.YzVccW0v9f4jV-kEAkOX6g',
-      markers: []
+      markers: [],
+      themeNum: 0,
+      image: {
+        '': require('assets/images/report-bg.png'),
+        1: require('assets/images/report-bg1.png'),
+        2: require('assets/images/report-bg2.png')
+      }
     };
+  },
+  created() {
+    let theme = document.documentElement.getAttribute('data-theme') || 0;
+    this.themeNum = theme.replace(/^\D+/g, '');
   },
   computed: {
     ...mapGetters(['isMobile'])
@@ -64,11 +85,23 @@ export default {
 #report {
   height: calc(100vh - 75px);
   overflow: hidden;
-  background: url('~assets/images/report-bg.png');
   padding-top: 75px;
   display: flex;
   align-items: center;
-
+  position: relative;
+  .report-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+  .popover {
+    position: absolute;
+    z-index: 100;
+    bottom: 10px;
+    right: 10px;
+  }
   .map-wrapper {
     position: relative;
     background-color: #fff;

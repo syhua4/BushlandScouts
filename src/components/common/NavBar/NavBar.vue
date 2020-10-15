@@ -3,9 +3,10 @@
     <div class="logo" @click="goHome">
       <slot name="logo" />
     </div>
+    <audio src="~assets/shimmer.mp3" ref="fx" />
+
     <div class="navbar-wrapper" :class="{ mobile: isMobile }">
       <div class="nav-items" v-if="!isMobile">
-        <audio src="~assets/shimmer.mp3" ref="fx" />
         <router-link
           v-for="item in navItems"
           :key="item.name"
@@ -17,18 +18,18 @@
           <span>{{ item.name }}</span>
         </router-link>
       </div>
-      <hamburger-icon class="nav-item" v-else @click.native="toggleSideDrawer" ref="burger" />
+      <hamburger-icon class="nav-item" v-else ref="burger" @toggler="toggler" />
     </div>
     <transition name="slide-in">
       <el-row v-show="showSideDrawer">
         <el-col :span="12">
-          <el-menu
-            text-color="#fff"
-            active-text-color="$background-color"
-            router
-            :default-active="$route.path"
-          >
-            <el-menu-item v-for="item in navItems" :index="item.to" :key="item.name">
+          <el-menu text-color="#fff" active-text-color="#fff" router :default-active="$route.path">
+            <el-menu-item
+              v-for="item in navItems"
+              :index="item.to"
+              :key="item.name"
+              @click.native="navClick"
+            >
               <span slot="title">{{ item.name }}</span>
             </el-menu-item>
           </el-menu>
@@ -47,9 +48,7 @@ export default {
   components: { HamburgerIcon },
   data() {
     return {
-      showSideDrawer: false,
-      showSubNav: false,
-      subItems: []
+      showSideDrawer: false
     };
   },
   props: {
@@ -59,14 +58,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isMobile'])
+    ...mapGetters(['isMobile', 'toggleSound'])
   },
   methods: {
-    toggleSideDrawer(s) {
-      this.showSideDrawer = s;
+    toggler(status) {
+      this.showSideDrawer = status;
     },
     navClick() {
-      this.$refs.fx.play();
+      console.log(this.toggleSound);
+      this.toggleSound ? this.$refs.fx.play() : '';
     },
     goHome() {
       this.$router.push('/');
@@ -74,15 +74,16 @@ export default {
   },
   watch: {
     isMobile(val) {
+      console.log(val);
       if (!val) {
         this.showSideDrawer = false;
       }
     },
-    async $route(to, from) {
+    $route(to, from) {
       if (this.isMobile) {
         if (to.path !== from.path || to.path == '/report') {
-          await this.toggleSideDrawer(false);
-          this.$refs.burger.$refs.hamburger.classList.remove('opened');
+          this.showSideDrawer = false;
+          this.$refs.burger.toggleOn = false;
         }
       }
     }
@@ -95,6 +96,8 @@ export default {
 
 .navbar {
   @include font_size($s);
+  @include bg_color();
+
   position: fixed;
   top: 0;
   left: 0;
@@ -105,7 +108,6 @@ export default {
   display: flex;
   padding: 8px;
   justify-content: center;
-  background-color: $background-color;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
   .logo {
     z-index: 1;
@@ -169,7 +171,8 @@ export default {
   .el-menu {
     padding-top: 20px;
     border-right: none;
-    background-color: $background-color;
+    @include bg_color();
+
     .el-menu-item {
       @include font_size($ms);
 

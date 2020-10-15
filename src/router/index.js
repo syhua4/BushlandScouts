@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from 'views/Home/Home';
 import Report from 'views/Report/Report';
+import Setting from 'views/Setting/Setting';
 import Weeds from 'views/Weeds/Weeds';
 import WeedInfo from 'views/Weeds/WeedInfo';
 import About from 'views/Footer/About';
@@ -32,6 +33,11 @@ const routes = [
     path: '/report',
     name: 'Report',
     component: Report
+  },
+  {
+    path: '/setting',
+    name: 'Setting',
+    component: Setting
   },
   {
     path: '/about',

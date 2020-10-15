@@ -44,7 +44,8 @@ export default {
   &.showBg {
     position: relative;
     z-index: 1;
-    background-color: rgba($color: #b8e994, $alpha: 0.4);
+    @include bg_alpha_color2(0.4);
+
     border-radius: 25px;
     min-height: 300px;
     margin-bottom: 30px;
@@ -52,7 +53,6 @@ export default {
       width: 90vw;
       margin: 0 auto;
     }
-    // border: 8px solid rgba($color: $background-color, $alpha: 0.2);
   }
   #main {
     position: relative;
@@ -104,18 +104,18 @@ export default {
       }
 
       .overlay {
+        @include font_color();
         opacity: 0;
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        color: $background-color;
         display: flex;
         justify-content: center;
         align-items: center;
         transition: all 0.2s ease-in-out;
-        background-color: rgba($color: $background-color, $alpha: 0.6);
+        @include bg_alpha_color(0.6);
         &:hover {
           opacity: 1 !important;
         }

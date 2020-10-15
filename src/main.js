@@ -7,12 +7,7 @@ import {
   MenuItem,
   Row,
   Col,
-  Submenu,
-  MenuItemGroup,
-  Card,
-  Dialog,
   Loading,
-  Pagination,
   Input,
   Select,
   Upload,
@@ -21,7 +16,9 @@ import {
   Form,
   FormItem,
   Message,
-  Popover
+  Popover,
+  Switch,
+  Backtop
 } from 'element-ui';
 import './assets/css/base.scss';
 import './theme/element/index.css';
@@ -29,13 +26,8 @@ import VueLazyLoad from 'vue-lazyload';
 Vue.config.productionTip = false;
 Vue.use(Row);
 Vue.use(Col);
-Vue.use(Card);
 Vue.use(Menu);
 Vue.use(MenuItem);
-Vue.use(MenuItemGroup);
-Vue.use(Submenu);
-Vue.use(Dialog);
-Vue.use(Pagination);
 Vue.use(Input);
 Vue.use(Select);
 Vue.use(Upload);
@@ -44,6 +36,8 @@ Vue.use(Button);
 Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(Popover);
+Vue.use(Switch);
+Vue.use(Backtop);
 
 Vue.use(Loading.directive);
 Vue.prototype.$loading = Loading.service;

@@ -3,8 +3,9 @@
     <button
       ref="hamburger"
       class="menu"
-      onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened'))"
+      @click="toggleHamburger"
       aria-label="Main Menu"
+      :class="toggleOn ? 'opened' : ''"
     >
       <svg width="40" height="40" viewBox="0 0 100 100">
         <path
@@ -23,7 +24,18 @@
 
 <script>
 export default {
-  name: 'HamburgerIcon'
+  name: 'HamburgerIcon',
+  data() {
+    return {
+      toggleOn: false
+    };
+  },
+  methods: {
+    toggleHamburger() {
+      this.toggleOn = !this.toggleOn;
+      this.$emit('toggler', this.toggleOn);
+    }
+  }
 };
 </script>
 

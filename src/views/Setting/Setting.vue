@@ -1,49 +1,66 @@
 <template>
-  <div class="copyright">
+  <div class="setting">
+    <audio src="~assets/shimmer.mp3" ref="fx" />
     <div class="container">
-      <h2>Copyright</h2>
-      <ul>
-        <li>
-          <p>© 2020 Bushland Scouts Inc.</p>
-          <img src="~assets/images/cc.png" alt="Creative Commons Attribution 4.0" />
-          <p>
-            Unless otherwise noted, all copyright material available on or through this website is
-            licensed under a
-            <a href="https://creativecommons.org/licenses/by/4.0/"
-              >Creative Commons Attribution 4.0 International licence (CC BY 4.0).</a
-            >
-          </p>
-          <p>
-            You are free to use copyright material available on or through this website that is
-            covered by a CC BY licence in line with the licence terms. You must keep the copyright
-            notice on the copyright material and attribute the Bushland Scout as the source of the
-            copyright material.
-          </p>
-        </li>
-      </ul>
+      <div class="content-wrapper">
+        <div class="content">
+          <div class="text">color theme</div>
+          <div class="themes">
+            <span @click="changeTheme('theme')" />
+            <span @click="changeTheme('theme1')" />
+            <span @click="changeTheme('theme2')" />
+          </div>
+        </div>
+        <div class="content">
+          <div class="text">sound effect</div>
+          <el-switch v-model="soundSwitch"></el-switch>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
-  name: 'Copyright',
+  name: 'Setting',
+  data() {
+    return {
+      soundSwitch: null
+    };
+  },
   created() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'instant'
-    });
+    this.soundSwitch = this.toggleSound;
+  },
+  methods: {
+    ...mapActions(['setSound']),
+    changeTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  },
+  computed: {
+    ...mapGetters(['toggleSound'])
+  },
+  watch: {
+    soundSwitch: {
+      handler(val) {
+        this.setSound(val);
+        if (val) {
+          this.$refs.fx.play();
+        }
+      }
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.copyright {
+.setting {
   @include font_size($m);
-  height: calc(100vh - 150px);
+  height: calc(100vh - 200px);
   @include bg_color_sub();
   overflow-x: hidden;
-  padding-top: 75px;
+  padding-top: 120px;
   text-align: center;
 
   .container {
@@ -112,17 +129,42 @@ export default {
       }
     }
   }
-  @keyframes up {
-    0% {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    .content {
+      display: flex;
+      align-items: center;
+      height: 30px;
+      width: 300px;
+      margin-bottom: 20px;
+      justify-content: space-between;
+      .text {
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      .themes {
+        span {
+          display: inline-block;
+          margin-left: 5px;
+          height: 30px;
+          width: 30px;
+          border: 2px solid #eee;
+          background-color: $background-color;
+          cursor: pointer;
+          &:nth-child(2) {
+            background-color: #febbbb;
+          }
+          &:nth-child(3) {
+            background-color: $background-color2;
+          }
+        }
+      }
     }
   }
-
   @keyframes transform {
     0%,
     100% {

@@ -35,7 +35,7 @@ export default {
 <style lang="scss" scoped>
 .about {
   height: calc(100vh - 150px);
-  background-color: #f0fff5;
+  @include bg_color_sub();
   overflow-x: hidden;
   padding-top: 75px;
   text-align: center;
@@ -56,7 +56,7 @@ export default {
       right: -150px;
       width: 300px;
       height: 300px;
-      background: #78e08f30;
+      @include bg_color_sub_before();
       animation: transform 25s ease-in-out infinite both alternate,
         movement 20s ease-in-out infinite both;
     }
@@ -70,7 +70,7 @@ export default {
       left: -220px;
       width: 400px;
       height: 400px;
-      background: #38ada940;
+      @include bg_color_sub_after();
       animation: transform 25s ease-in-out infinite both alternate,
         movement 20s ease-in-out infinite both;
     }
@@ -81,7 +81,8 @@ export default {
     }
     img {
       width: 300px;
-      background-color: $background-color;
+      @include bg_color();
+
       padding: 20px;
       border-radius: 10px;
       display: block;
@@ -101,7 +102,8 @@ export default {
       text-align: left;
       margin: 0 auto;
       li {
-        color: $background-color;
+        @include font_color();
+
         margin-bottom: 20px;
         span {
           color: $sub-color2;

@@ -2,7 +2,7 @@
   <div class="fullpage">
     <swiper v-if="Object.keys(content).length > 0" ref="fullpage">
       <swiper-item>
-        <img src="~assets/images/test-bg.png" alt="home-bg-2" class="bg" />
+        <img :src="image[themeNum]" alt="home-bg-2" class="bg" />
         <section class="s0">
           <h2>{{ content.Common_name }}</h2>
           <img :src="content.IMAGE" :alt="content.Common_name" />
@@ -10,7 +10,7 @@
         </section>
       </swiper-item>
       <swiper-item>
-        <img src="~assets/images/test-bg.png" alt="home-bg-2" class="bg" />
+        <img :src="image[themeNum]" alt="home-bg-2" class="bg" />
         <section class="s1">
           <div class="text">
             <h2>Description</h2>
@@ -26,9 +26,9 @@
         </section>
       </swiper-item>
       <swiper-item>
-        <img src="~assets/images/test-bg.png" alt="home-bg-2" class="bg" />
+        <img :src="image[themeNum]" alt="home-bg-2" class="bg" />
         <section class="s2">
-          <h2>Characterisitcs</h2>
+          <h2>Characteristics</h2>
           <div class="img-wrapper">
             <img :src="content.IMAGE" :alt="content.Common_name" />
             <div class="line line-1">
@@ -76,13 +76,26 @@
               <i class="iconfont" :class="`icon-${content.Leaf_shape.toLowerCase()}`" />
             </div>
             <div class="circle circle-4" :text="content.Leaf_arrangement.toLowerCase()">
-              <i class="iconfont" :class="`icon-${content.Leaf_arrangement.toLowerCase()}`" />
+              <el-popover
+                class="popover"
+                placement="top"
+                :title="content.Leaf_arrangement"
+                width="200"
+                trigger="hover"
+                :content="leaf_pop[content.Leaf_arrangement]"
+              >
+                <i
+                  class="iconfont"
+                  :class="`icon-${content.Leaf_arrangement.toLowerCase()}`"
+                  slot="reference"
+                />
+              </el-popover>
             </div>
           </div>
         </section>
       </swiper-item>
       <swiper-item>
-        <img src="~assets/images/test-bg.png" alt="home-bg-2" class="bg" />
+        <img :src="image[themeNum]" alt="home-bg-2" class="bg" />
         <section class="s3">
           <div class="text">
             <h2>Impact</h2>
@@ -93,7 +106,6 @@
             <p>Have you spotted any plants like described?</p>
             <el-button type="primary" @click="$router.push('/report')">Report now</el-button>
           </div>
-          <!-- <img :src="content.IMAGE" :alt="content.Common_name" /> -->
         </section>
       </swiper-item>
     </swiper>
@@ -111,6 +123,10 @@ export default {
     SwiperItem,
     ScrollIndicator
   },
+  created() {
+    let theme = document.documentElement.getAttribute('data-theme') || 0;
+    this.themeNum = theme.replace(/^\D+/g, '');
+  },
   props: {
     content: {
       type: [Object, Array],
@@ -119,6 +135,12 @@ export default {
   },
   data() {
     return {
+      themeNum: 0,
+      image: {
+        '': require('assets/images/test-bg.png'),
+        1: require('assets/images/test-bg1.png'),
+        2: require('assets/images/test-bg2.png')
+      },
       colors: {
         green: '#45b10f',
         brown: '#8b4425',
@@ -134,14 +156,15 @@ export default {
         Alternate: 'Leaves on the stem is arranged in alternate sides.',
         Opposite: 'Leaves on the stem is arranged in a symmetrical way.',
         Basal: 'All the leaves arise from the base (crown) of the plant.',
-        Wholred: 'More than three leaves grow from a same plant node on the stem.',
+        Whorled: 'More than three leaves grow from a same plant node on the stem.',
         Rosulate: 'Leaves are arranged in dense, radiating cluster.'
       }
     };
   },
   mounted() {
-    this.$refs.flower.style.color = this.colors[this.content.Flower_colour.toLowerCase()];
-    this.$refs.flower2.style.color = this.colors[this.content.Flower_colour.toLowerCase()];
+    console.log(111);
+    this.$refs.flower.style.color = this.colors[this.content.Flower_colour.toLowerCase().trim()];
+    this.$refs.flower2.style.color = this.colors[this.content.Flower_colour.toLowerCase().trim()];
   }
 };
 </script>
@@ -230,6 +253,8 @@ export default {
           transform: translate(-50%, -50%);
           img {
             width: 100%;
+            max-height: 250px;
+            max-width: none;
           }
           .line {
             height: 2px;
@@ -258,7 +283,7 @@ export default {
               width: 75px;
               height: 75px;
               border-radius: 50%;
-              background: rgba($color: $background-color, $alpha: 0.9);
+              @include bg_alpha_color(0.9);
               display: flex;
               align-items: center;
               justify-content: center;
@@ -313,9 +338,6 @@ export default {
                 }
               }
               &.circle-2 {
-                .icon-flower {
-                  color: pink;
-                }
                 &::before {
                   content: 'Flower Colour';
                 }
@@ -382,11 +404,11 @@ export default {
         width: 45px;
         height: 45px;
         border-radius: 50%;
-        background: rgba($color: $background-color, $alpha: 0.8);
+        @include bg_alpha_color(0.8);
+
         display: flex;
         align-items: center;
         justify-content: center;
-        color: $background-color;
         .iconfont {
           color: #fff;
         }

@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <nav-bar :navItems="navigation">
-      <img slot="logo" src="~assets/images/logo.png" />
+      <img slot="logo" src="~assets/images/logo.png" alt="logo" />
     </nav-bar>
     <keep-alive include="Weeds">
       <router-view />
     </keep-alive>
+    <back-top />
 
     <bs-footer :isShow="showFooter" />
   </div>
@@ -13,15 +14,16 @@
 <script>
 import NavBar from 'components/common/NavBar/NavBar';
 import BsFooter from 'components/common/Footer/Footer';
+import BackTop from 'components/common/BackTop/BackTop';
 
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'App',
   created() {
-    // this.setPwd()
+    this.setPwd();
   },
-  components: { NavBar, BsFooter },
+  components: { NavBar, BsFooter, BackTop },
   data() {
     return {
       navigation: [
@@ -34,6 +36,11 @@ export default {
           name: 'WEEDS',
           to: '/weeds',
           icon: 'icon-pest'
+        },
+        {
+          name: 'SETTING',
+          to: '/setting',
+          icon: 'icon-setting'
         }
       ],
       showFooter: true
@@ -59,7 +66,7 @@ export default {
     },
     setPwd() {
       let pwd = prompt('Please enter the password:');
-      while (pwd !== 'bush27') {
+      while (pwd !== 'scouts27') {
         if (pwd == null || pwd == '') {
           this.$router.push('/404');
         } else pwd = prompt('Please enter the password:');
