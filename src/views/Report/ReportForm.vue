@@ -14,6 +14,7 @@
           ref="uploadImage"
           :action="uploadUrl"
           :on-change="afterRead"
+          :on-remove="handleRemove"
           :auto-upload="false"
           :file-list="fileList"
           list-type="picture-card"
@@ -208,7 +209,8 @@ export default {
         }
       ],
       verified: false,
-      verifiedSpecies: ''
+      verifiedSpecies: '',
+      failAttempt: 0
     };
   },
 
@@ -247,7 +249,6 @@ export default {
               .toLowerCase()
               .trim()
           );
-          console.log(this.verifiedSpecies.trim());
           let verified =
             this.verifiedSpecies ==
             this.formData.Weed.split('-')[1]
@@ -264,7 +265,6 @@ export default {
           fd.append('postcode', this.location.postcode);
           fd.append('verified', verified);
           fd.append('date', date);
-
           this.loading = this.$loading({
             lock: true,
             text: 'Sending Report',
@@ -340,11 +340,14 @@ export default {
         if (res.message.trim() != 'negative') {
           this.verified = true;
           this.verifiedSpecies = res.message.toLowerCase().trim();
+          this.failAttempt = 0;
         } else {
-          this.$message.error(
-            'Sorry, our system did not recognise this as a weed, please try again with another image.'
-          );
+          this.$message.error('Oops, you are too close to identify it... better luck next time!');
           this.$refs.uploadImage.clearFiles();
+          this.failAttempt = this.failAttempt + 1;
+          if (this.failAttempt > 1) {
+            this.$emit('failPopup');
+          }
         }
       });
     },
@@ -383,6 +386,9 @@ export default {
           this.location['postcode'] = res.data.features[0].text;
           this.location['suburb'] = res.data.features[1].text;
         });
+    },
+    handleRemove() {
+      this.verified = false;
     }
   }
 };

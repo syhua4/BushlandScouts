@@ -18,7 +18,8 @@ import {
   Message,
   Popover,
   Switch,
-  Backtop
+  Backtop,
+  Dialog
 } from 'element-ui';
 import './assets/css/base.scss';
 import './theme/element/index.css';
@@ -38,6 +39,7 @@ Vue.use(FormItem);
 Vue.use(Popover);
 Vue.use(Switch);
 Vue.use(Backtop);
+Vue.use(Dialog);
 
 Vue.use(Loading.directive);
 Vue.prototype.$loading = Loading.service;

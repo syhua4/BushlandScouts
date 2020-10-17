@@ -7,16 +7,29 @@
       title="Report an unusual plant pest"
       width="200"
       trigger="click"
-      content="Report an unusual plant pest immediately on Exotic Plant Pest Hotline 1800084881"
+      content="Report an unusual plant pest immediately on Exotic Plant Pest Hotline 1800084881."
     >
       <el-button slot="reference" type="primary" icon="el-icon-phone" circle class="popover" />
     </el-popover>
+    <el-dialog title="" :visible.sync="showPopup" width="40%">
+      <span
+        >Oops, it seems like you have made 2 failed attempts. Do you want to re-visit some weeds
+        around you?</span
+      >
+      <div class="link-wrapper">
+        <span
+          v-for="item in weedsAroundMe"
+          :key="item.Species_ID"
+          @click="$router.push(`/weeds/${item.Species_ID}`)"
+          >{{ item.Common_name }}</span
+        >
+      </div>
+    </el-dialog>
     <div class="map-wrapper">
       <i class="iconfont icon-close" @click="$router.go(-1)" v-show="!isMobile" />
-
       <mapbox class="map" ref="map" @getMarker="getMarker" />
       <div class="report-form">
-        <report-form @uploaded="uploaded" ref="form" />
+        <report-form @uploaded="uploaded" ref="form" @failPopup="failPopup" />
       </div>
       <div class="report-btn">
         <el-button type="primary" plain circle size="medium" @click.native="toggleReportForm"
@@ -25,7 +38,12 @@
       </div>
       <div class="report-form--mobile" v-if="showForm">
         <i class="iconfont icon-close" @click="toggleReportForm" />
-        <report-form class="report-form--mobile" @uploaded="uploaded" ref="form" />
+        <report-form
+          class="report-form--mobile"
+          @uploaded="uploaded"
+          ref="form"
+          @failPopup="failPopup"
+        />
       </div>
     </div>
   </div>
@@ -49,7 +67,9 @@ export default {
         '': require('assets/images/report-bg.png'),
         1: require('assets/images/report-bg1.png'),
         2: require('assets/images/report-bg2.png')
-      }
+      },
+      showPopup: false,
+      weedsAroundMe: []
     };
   },
   created() {
@@ -66,6 +86,37 @@ export default {
     toggleReportForm() {
       this.showForm = !this.showForm;
     },
+    togglePopup() {
+      this.showPopup = false;
+    },
+    failPopup() {
+      this.showPopup = true;
+      this.weedsAroundMe = this._removeDuplicate().slice(0, 3);
+    },
+    _removeDuplicate() {
+      const result = [];
+      const map = new Map();
+      for (const item of this.markers) {
+        if (!map.has(item.Species_ID)) {
+          map.set(item.Species_ID, true); // set any value to Map
+          result.push({
+            Common_name: item.Common_name,
+            Datetime: item.Datetime,
+            Distance: item.Distance,
+            IMAGE: item.IMAGE,
+            Latitude: item.Latitude,
+            Longitude: item.Longitude,
+            Postcode: item.Postcode,
+            Reporter: item.Reporter,
+            Species_ID: item.Species_ID,
+            Suburb: item.Suburb,
+            Verified: item.Verified
+          });
+        }
+      }
+      return result;
+    },
+
     uploaded(marker) {
       this.$refs.map.w_location.push(marker);
       this.$refs.form.resetForm();
@@ -101,6 +152,16 @@ export default {
     z-index: 100;
     bottom: 10px;
     right: 10px;
+  }
+  .link-wrapper {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    span {
+      @include font_color();
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
   .map-wrapper {
     position: relative;

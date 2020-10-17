@@ -11,7 +11,7 @@
 
       <div class="weed-location">
         <p>Is there any weeds around you?</p>
-        <p>Find the nearby weeds by enter your pin code!</p>
+        <p>Find the nearby weeds by enter your postcode!</p>
         <el-form
           ref="zipCode"
           :model="zipCode"
@@ -23,7 +23,7 @@
           <el-form-item prop="zipInput">
             <el-input
               v-model.number="zipCode.zipInput"
-              placeholder="Enter Pin Code"
+              placeholder="Enter Postcode"
               :maxlength="4"
               @keyup.enter.native="submitForm"
               @keyup.delete.native="resetForm"
@@ -33,7 +33,7 @@
             <el-select
               v-model="zipCode.topZip"
               clearable
-              placeholder="Choose among the active pin code"
+              placeholder="Choose among the active postcode"
             >
               <el-option
                 v-for="(item, index) in topZipOptions"
@@ -53,7 +53,7 @@
           {{
             noWeed
               ? 'Congratulations! There are no weeds in your area!'
-              : 'Find the nearby weeds by enter your pin code!'
+              : 'Find the nearby weeds by enter your postcode!'
           }}
         </div>
       </div>
