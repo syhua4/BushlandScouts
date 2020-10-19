@@ -172,7 +172,7 @@ export default {
     startLoading() {
       this.loading = this.$loading({
         lock: true,
-        text: 'Checking Pin Code',
+        text: 'Checking Postcode',
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       });
