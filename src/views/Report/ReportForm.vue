@@ -8,7 +8,7 @@
       label-width="100px"
       label-position="top"
     >
-      <el-form-item label="" prop="uploadImage" class="img-upload-wrapper">
+      <el-form-item label="Upload a weed image" prop="uploadImage" class="img-upload-wrapper">
         <el-upload
           class="upload"
           ref="uploadImage"
@@ -34,6 +34,7 @@
           clearable
           prefix-icon="el-icon-user"
           :style="{ width: '100%' }"
+          @click.native="inputMessage"
         ></el-input>
       </el-form-item>
       <el-form-item label="Weed" prop="Weed">
@@ -44,6 +45,7 @@
           filterable
           clearable
           :style="{ width: '100%' }"
+          @click.native="inputMessage"
         >
           <el-option
             v-for="(item, index) in WeedOptions"
@@ -215,6 +217,12 @@ export default {
   },
 
   methods: {
+    inputMessage() {
+      if (!this.verified) {
+        this.$message.error('Please upload a weed image.');
+        return;
+      }
+    },
     _getDate() {
       let d = new Date();
       let date = d.getDate() < 10 ? '0' + d.getDate() : d.getDate();
@@ -224,7 +232,7 @@ export default {
     },
     submitForm() {
       if (!Object.keys(this.location).length) {
-        this.$message.error('Report can not be sent without the location');
+        this.$message.error('Report can not be sent without the location.');
         return;
       }
       var sameLocation = this.$parent.markers.filter(el => {
@@ -361,6 +369,7 @@ export default {
       let isRightSize = file.size / 1024 / 1024 < 1;
       if (!isRightSize) {
         this.$message.error('Image size exceeds 1MB.');
+        this.loading.close();
       }
       return isRightSize;
     },

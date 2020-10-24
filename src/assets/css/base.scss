@@ -89,3 +89,8 @@ input {
   @include bg_color();
   @include border_color();
 }
+
+.el-form-item__label {
+  font-weight: 600;
+  text-transform: uppercase;
+}

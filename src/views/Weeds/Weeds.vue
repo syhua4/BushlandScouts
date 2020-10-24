@@ -11,7 +11,7 @@
 
       <div class="weed-location">
         <p>Is there any weeds around you?</p>
-        <p>Find the nearby weeds by enter your postcode!</p>
+        <p>Find the nearby top 5 weeds by enter your postcode!</p>
         <el-form
           ref="zipCode"
           :model="zipCode"
@@ -82,7 +82,7 @@ export default {
       noWeed: false,
       placeholder: this.noWeed
         ? 'Congratulations! There are no weeds in your area!'
-        : 'Find the nearby weeds by enter your pin code!',
+        : 'Find the nearby top 5 weeds by enter your postcode!',
       weeds: [],
       wons: [
         {
@@ -135,7 +135,7 @@ export default {
       console.log(this.zipCode);
       if (!this.zipCode.zipInput && !this.zipCode.topZip) {
         this.$message.error(
-          'Please enter either a pin code or select one from the top five from the drop down menu.'
+          'Please enter either a postcode or select one from the top five from the drop down menu.'
         );
         return;
       } else if (this.zipCode.zipInput && this.zipCode.topZip) {
@@ -143,7 +143,7 @@ export default {
         this.submitForm();
       } else if (!/^3\d{3}$/.test(this.zipCode.zipInput | this.zipCode.topZip)) {
         this.$message.error(
-          'Oops, Victoria pin code should be 4 digits and it starts with 3. Please try again.'
+          'Oops, Victoria postcode should be 4 digits and it starts with 3. Please try again.'
         );
         return;
       } else {
