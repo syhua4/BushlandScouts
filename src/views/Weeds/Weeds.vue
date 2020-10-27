@@ -6,7 +6,7 @@
         <p>Weeds are plants growing where it is not wanted.</p>
         <p>They outgrow native plants and takeover the bushland.</p>
         <p>Native animals can lose their home and food.</p>
-        <p>Some weeds can also affect poeple's health, by giving them allergies.</p>
+        <p>Some weeds can also affect people's health, by giving them allergies.</p>
       </div>
 
       <div class="weed-location">

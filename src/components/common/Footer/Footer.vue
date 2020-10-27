@@ -3,9 +3,7 @@
     <div class="item-wrapper" :class="{ mobile: isMobile }">
       <span v-for="(item, index) in items" :key="index" @click="toLink(item)">{{ item }}</span>
     </div>
-    <span class="copyright" :class="{ mobile: isMobile }"
-      >Copyright © 2020 Bushland Scouts Inc. All rights reserved</span
-    >
+    <span class="copyright" :class="{ mobile: isMobile }">Copyright © 2020 Bushland Scouts.</span>
   </div>
 </template>
 

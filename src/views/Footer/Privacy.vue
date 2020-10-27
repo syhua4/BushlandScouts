@@ -6,7 +6,7 @@
       <ul>
         <li>
           <span>1.INFORMATION FROM CHILDREN</span>When a child accesses and interacts with the
-          Company Services, we may collect certain information about those visits. The information
+          website services, we may collect certain information about those visits. The information
           we collect includes, IP address and/or mobile device identifier, web browser type, picture
           which children upload and nicknames children provided. We do not collect registration
           information from children on this site. We only use these types of information to support

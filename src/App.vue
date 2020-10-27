@@ -35,7 +35,7 @@ export default {
         {
           name: 'WEEDS',
           to: '/weeds',
-          icon: 'icon-pest'
+          icon: 'icon-herb'
         },
         {
           name: 'SETTING',
