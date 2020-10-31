@@ -58,7 +58,7 @@
         </div>
       </div>
 
-      <div class="weed-text">Check out some top dangerous weeds in Victoria!</div>
+      <div class="weed-text">Check out the most dangerous weeds in Victoria!</div>
       <gallery :content="wons" @showSpecies="showSpecies" class="wons" />
     </div>
   </div>
